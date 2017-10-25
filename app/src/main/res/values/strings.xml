@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Hunger</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="generic_price_caption">$100</string>
+    <string name="beverages_caption">Напитки</string>
+    <string name="burgers_caption">Бургеры</string>
+    <string name="complex_dinner_caption">Комплексные обеды</string>
+    <string name="dessert_caption">Десерты</string>
+    <string name="garnish_caption">Гарниры</string>
+    <string name="meat_caption">Мясные блюда</string>
+    <string name="pizza_caption">Пицца</string>
+    <string name="salad_caption">Салаты</string>
+    <string name="soup_caption">Супы</string>
+    <string name="sushi_caption">Суши и роллы</string>
+    <string name="fetch_dishes_http_link">http://192.168.0.100/hunger/FetchDishes.php?categoryID=</string>
+</resources>
