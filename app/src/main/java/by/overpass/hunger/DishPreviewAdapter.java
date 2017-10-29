@@ -37,8 +37,8 @@ public class DishPreviewAdapter extends BaseAdapter {
     }
 
     @Override
-    public long getItemId(int i) {
-        return 0;
+    public long getItemId(int position) {
+        return dishes.get(position).getId();
     }
 
     @Override

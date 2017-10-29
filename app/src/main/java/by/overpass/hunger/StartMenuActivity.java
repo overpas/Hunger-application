@@ -2,14 +2,18 @@ package by.overpass.hunger;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 public class StartMenuActivity extends AppCompatActivity {
     
     GridView gridView;
+    ImageView actionBarCartImage;
+
     private DishCategory[] categories = {
             new DishCategory(R.string.complex_dinner_caption, R.drawable.generic_complex_dinner),
             new DishCategory(R.string.soup_caption, R.drawable.generic_soup),
@@ -27,6 +31,8 @@ public class StartMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_menu);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.action_bar);
         
         gridView = (GridView) findViewById(R.id.categoriesGridView);
         DishCategoryAdapter dishCategoryAdapter = new DishCategoryAdapter(this, categories);
@@ -43,6 +49,15 @@ public class StartMenuActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(gridView.getContext(), DishesMenuActivity.class);
                 intent.putExtra("categoryID", i);
+                startActivity(intent);
+            }
+        });
+
+        actionBarCartImage = (ImageView) findViewById(R.id.actionBarCartImage);
+        actionBarCartImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
                 startActivity(intent);
             }
         });

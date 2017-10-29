@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="categoryCaptionBackground">#80003366</color>
+    <color name="darkBlueGrey">#546e99</color>
+    <color name="priceColor">#ffd11a</color>
+    <color name="absolutelyBlack">#000000</color>
+    <color name="absolutelyWhite">#ffffff</color>
+    <color name="brown">#a35618</color>
 </resources>

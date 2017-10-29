@@ -44,7 +44,7 @@
         android:background="@color/categoryCaptionBackground"
         android:text="@string/generic_price_caption"
         android:textAlignment="center"
-        android:textColor="#ffd11a"
+        android:textColor="@color/priceColor"
         android:textSize="@dimen/category_caption_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

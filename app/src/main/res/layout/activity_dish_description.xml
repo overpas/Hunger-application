@@ -6,4 +6,111 @@
     android:layout_height="match_parent"
     tools:context="by.overpass.hunger.DishDescriptionActivity">
 
+    <Button
+        android:id="@+id/btnAddToCart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_of_some_dp"
+        android:layout_marginEnd="@dimen/margin_of_some_dp"
+        android:layout_marginLeft="@dimen/margin_of_some_dp"
+        android:layout_marginRight="@dimen/margin_of_some_dp"
+        android:layout_marginStart="@dimen/margin_of_some_dp"
+        android:background="@color/categoryCaptionBackground"
+        android:onClick="toCart"
+        android:text="@string/add_to_cart"
+        android:textColor="@color/priceColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/dishNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_of_some_dp"
+        android:layout_marginLeft="@dimen/margin_of_some_dp"
+        android:layout_marginRight="@dimen/margin_of_some_dp"
+        android:layout_marginStart="@dimen/margin_of_some_dp"
+        android:layout_marginTop="@dimen/margin_of_some_dp"
+        android:text="Блюдо"
+        android:textColor="@color/brown"
+        android:textSize="@dimen/dish_name_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dishImageView" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/margin_of_some_dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddToCart"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dishNameTextView">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/dishDescriptionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_of_some_dp"
+                android:text="Blablablablablablablablablablablablablablablablablablablablablabla"
+                android:textColor="@color/absolutelyBlack" />
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dishPriceTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="$100"
+                android:textAlignment="center"
+                android:textColor="@color/absolutelyBlack"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dishWeightTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="3 кг"
+                android:textAlignment="center"
+                android:textColor="@color/absolutelyBlack"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dishCalorificValueTextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="5000 ккал"
+                android:textAlignment="center"
+                android:textColor="@color/absolutelyBlack"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/dishImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/dish_placeholder"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

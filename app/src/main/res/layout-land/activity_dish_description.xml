@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="by.overpass.hunger.DishDescriptionActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/dishImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/dish_placeholder"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dishDescriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/margin_of_some_dp"
+            android:layout_marginEnd="@dimen/margin_of_some_dp"
+            android:layout_marginLeft="@dimen/margin_of_some_dp"
+            android:layout_marginRight="@dimen/margin_of_some_dp"
+            android:layout_marginStart="@dimen/margin_of_some_dp"
+            android:layout_marginTop="@dimen/margin_of_some_dp"
+            android:text="Blablablablablablablablablablablablablablablablabla."
+            android:textColor="@color/absolutelyBlack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dishImageView" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/dishNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Блюдо"
+            android:textColor="@color/brown"
+            android:textSize="@dimen/dish_name_size"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_of_some_dp"
+            android:layout_marginEnd="@dimen/margin_of_some_dp"
+            android:layout_marginLeft="@dimen/margin_of_some_dp"
+            android:layout_marginRight="@dimen/margin_of_some_dp"
+            android:layout_marginStart="@dimen/margin_of_some_dp"
+            android:background="@color/categoryCaptionBackground"
+            android:text="@string/add_to_cart"
+            android:textColor="@color/priceColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <TextView
+            android:id="@+id/priceCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_of_more_dp"
+            android:text="Цена:"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dishNameTextView" />
+
+        <TextView
+            android:id="@+id/weightCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_of_more_dp"
+            android:text="Масса:"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/priceCaption" />
+
+        <TextView
+            android:id="@+id/calorificValueCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_of_more_dp"
+            android:text="Калорийность:"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weightCaption" />
+
+        <TextView
+            android:id="@+id/dishPriceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_of_more_dp"
+            android:layout_weight="1"
+            android:text="$100"
+            android:textAlignment="center"
+            android:textColor="@color/absolutelyBlack"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/calorificValueCaption"
+            app:layout_constraintTop_toBottomOf="@+id/dishNameTextView" />
+
+        <TextView
+            android:id="@+id/dishWeightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_of_more_dp"
+            android:layout_weight="1"
+            android:text="3 кг"
+            android:textAlignment="center"
+            android:textColor="@color/absolutelyBlack"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/calorificValueCaption"
+            app:layout_constraintTop_toBottomOf="@+id/dishPriceTextView" />
+
+        <TextView
+            android:id="@+id/dishCalorificValueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_of_more_dp"
+            android:layout_weight="1"
+            android:text="5000 ккал"
+            android:textAlignment="center"
+            android:textColor="@color/absolutelyBlack"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/calorificValueCaption"
+            app:layout_constraintTop_toBottomOf="@+id/dishWeightTextView" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

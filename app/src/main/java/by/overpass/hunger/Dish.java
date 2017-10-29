@@ -11,11 +11,11 @@ public class Dish {
     private String name;
     private String url;
     private String description;
-    private float weight;
-    private float calorificValue;
-    private float price;
+    private double weight;
+    private double calorificValue;
+    private double price;
 
-    public Dish(int id, int categoryID, String name, String url, float price) {
+    public Dish(int id, int categoryID, String name, String url, double price) {
         this.id = id;
         this.categoryID = categoryID;
         this.name = name;
@@ -43,15 +43,15 @@ public class Dish {
         return description;
     }
 
-    public Float getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public Float getCalorificValue() {
+    public double getCalorificValue() {
         return calorificValue;
     }
 
-    public Float getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -59,11 +59,11 @@ public class Dish {
         this.description = description;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
-    public void setCalorificValue(float calorificValue) {
+    public void setCalorificValue(double calorificValue) {
         this.calorificValue = calorificValue;
     }
 }

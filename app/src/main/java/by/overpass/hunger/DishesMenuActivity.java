@@ -1,9 +1,14 @@
 package by.overpass.hunger;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGetHC4;
@@ -24,11 +29,23 @@ public class DishesMenuActivity extends AppCompatActivity {
 
     GridView gridView;
     int categoryID = -1;
+    ImageView actionBarCartImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dishes_menu);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.action_bar);
+
+        actionBarCartImage = (ImageView) findViewById(R.id.actionBarCartImage);
+        actionBarCartImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null)
@@ -49,8 +66,8 @@ public class DishesMenuActivity extends AppCompatActivity {
             for (int i = 0; i < arrayOfDishes.length(); i++) {
                 jsonObject = arrayOfDishes.getJSONObject(i);
                 selectedDishesList.add(new Dish(jsonObject.getInt("id"), categoryID,
-                        jsonObject.getString("name"), jsonObject.getString("url"),
-                        (float) jsonObject.getDouble("price")));
+                        jsonObject.getString("name"), jsonObject.getString("url").trim(),
+                        jsonObject.getDouble("price")));
             }
 
         } catch (InterruptedException e) {
@@ -62,8 +79,22 @@ public class DishesMenuActivity extends AppCompatActivity {
         }
 
         gridView = (GridView) findViewById(R.id.dishesGridView);
-        DishPreviewAdapter dishPreviewAdapter = new DishPreviewAdapter(this, selectedDishesList);
+        final DishPreviewAdapter dishPreviewAdapter = new DishPreviewAdapter(this, selectedDishesList);
         gridView.setAdapter(dishPreviewAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(gridView.getContext(), DishDescriptionActivity.class);
+                intent.putExtra("chosenDishID", (int) dishPreviewAdapter.getItemId(position));
+
+                /*Log.d("DISHESMENUACTIVITY", "position = " + position + ", id[position] = " +
+                        dishPreviewAdapter.getItemId(position));*/
+
+                startActivity(intent);
+            }
+        });
+
     }
 
     private class DishesFetcher extends AsyncTask<String, Void, String> {
