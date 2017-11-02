@@ -5,9 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import java.util.Arrays;
-
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity /*implements AdapterView.OnItemClickListener*/ {
 
     ListView listView;
 
@@ -19,7 +17,21 @@ public class CartActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.action_bar);
 
         listView = (ListView) findViewById(R.id.cartContents);
-        DishInCartAdapter dishInCartAdapter = new DishInCartAdapter(this, Arrays.asList(1, 2, 3, 4));
+
+        //debug
+        /*if (CartControl.cartList == null)
+            Toast.makeText(this, "NULL", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, CartControl.cartList.toString(), Toast.LENGTH_SHORT).show();*/
+
+        DishInCartAdapter dishInCartAdapter = new DishInCartAdapter(this, CartControl.cartList);
         listView.setAdapter(dishInCartAdapter);
+
+        //listView.setOnItemClickListener(this);
     }
+
+    /*@Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+    }*/
 }

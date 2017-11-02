@@ -13,10 +13,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGetHC4;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +26,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.concurrent.ExecutionException;
-
-import static android.R.attr.data;
 
 public class DishDescriptionActivity extends AppCompatActivity {
 
@@ -63,8 +57,13 @@ public class DishDescriptionActivity extends AppCompatActivity {
         actionBarCartImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
-                startActivity(intent);
+                if (CartControl.currentOrderID == -1)
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.cart_is_empty),
+                            Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -73,7 +72,7 @@ public class DishDescriptionActivity extends AppCompatActivity {
             chosenDishID = extras.getInt("chosenDishID");
 
         String link = getResources().getString(R.string.fetch_dish_info_http_link) + chosenDishID;
-        AsyncTask<String, Void, String> dishInfoFetcher = new DishInfoFetcher().execute(link);
+        AsyncTask<String, Void, String> dishInfoFetcher = new DishesFetcher().execute(link);
         String stringJSON;
         JSONArray arrayOfDishes;
         JSONObject jsonObject;
@@ -110,12 +109,15 @@ public class DishDescriptionActivity extends AppCompatActivity {
     }
 
     public void toCart(View v) {
-        if (Controls.currentOrderID == -1)
+        if (CartControl.currentOrderID == -1)
             createNewOrder();
 
         addToCart();
 
-        Toast.makeText(this, getResources().getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
+        CartControl.updateCartList(this);
+
+        if (CartControl.currentOrderID != -1)
+            Toast.makeText(this, getResources().getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
     }
 
     public void createNewOrder() {
@@ -123,7 +125,7 @@ public class DishDescriptionActivity extends AppCompatActivity {
         AsyncTask<String, Void, String> creator = new OrderOrCartCreator().execute(newOrderLink);
         try {
             int newlyInsertedID = Integer.parseInt(creator.get());
-            Controls.currentOrderID = newlyInsertedID;
+            CartControl.currentOrderID = newlyInsertedID;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -133,7 +135,7 @@ public class DishDescriptionActivity extends AppCompatActivity {
 
     public void addToCart() {
         String cartLink = getResources().getString(R.string.add_to_cart_http_link);
-        String orderID = String.valueOf(Controls.currentOrderID);
+        String orderID = String.valueOf(CartControl.currentOrderID);
         String dishID = String.valueOf(chosenDishID);
 
         AsyncTask<String, Void, String> adder = new OrderOrCartCreator().execute(cartLink, dishID,
@@ -186,47 +188,6 @@ public class DishDescriptionActivity extends AppCompatActivity {
             }
 
             return sb == null ? null : sb.toString();
-        }
-    }
-
-    private class DishInfoFetcher extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String link = urls[0];
-            CloseableHttpClient client = HttpClients.createDefault();
-            HttpGetHC4 request = new HttpGetHC4(link);
-            CloseableHttpResponse response;
-            StringBuffer sb = null;
-
-            try {
-
-                response = client.execute(request);
-                BufferedReader in = new BufferedReader(new
-                        InputStreamReader(response.getEntity().getContent()));
-
-                sb = new StringBuffer("");
-                String line;
-
-                while ((line = in.readLine()) != null) {
-                    sb.append(line);
-                    break;
-                }
-
-                in.close();
-                client.close();
-                response.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return sb != null ? sb.toString() : null;
-        }
-
-        @Override
-        protected void onPostExecute(String aVoid) {
-            super.onPostExecute(aVoid);
         }
     }
 }

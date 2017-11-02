@@ -9,18 +9,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGetHC4;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -42,8 +36,13 @@ public class DishesMenuActivity extends AppCompatActivity {
         actionBarCartImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
-                startActivity(intent);
+                if (CartControl.currentOrderID == -1)
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.cart_is_empty),
+                            Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -95,46 +94,5 @@ public class DishesMenuActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private class DishesFetcher extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String link = urls[0];
-            CloseableHttpClient client = HttpClients.createDefault();
-            HttpGetHC4 request = new HttpGetHC4(link);
-            CloseableHttpResponse response = null;
-            StringBuffer sb = null;
-
-            try {
-
-                response = client.execute(request);
-                BufferedReader in = new BufferedReader(new
-                        InputStreamReader(response.getEntity().getContent()));
-
-                sb = new StringBuffer("");
-                String line;
-
-                while ((line = in.readLine()) != null) {
-                    sb.append(line);
-                    break;
-                }
-
-                in.close();
-                client.close();
-                response.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return sb != null ? sb.toString() : null;
-        }
-
-        @Override
-        protected void onPostExecute(String aVoid) {
-            super.onPostExecute(aVoid);
-        }
     }
 }

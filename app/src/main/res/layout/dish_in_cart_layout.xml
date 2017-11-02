@@ -4,72 +4,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/categoryCaptionBackground"
-    android:orientation="horizontal"
-    android:weightSum="10">
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:orientation="vertical">
+    <TextView
+        android:id="@+id/dishNameText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Блюдо"
+        android:textAlignment="center"
+        android:textColor="@color/absolutelyWhite"
+        android:textSize="@dimen/dish_name_size" />
 
-        <TextView
-            android:id="@+id/dishNameText"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Блюдо"
-            android:textColor="@color/absolutelyWhite" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/dishPriceText"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="$100"
-            android:textColor="@color/priceColor" />
-    </LinearLayout>
+            android:textColor="@color/priceColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/minusOneDishImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@mipmap/ic_remove_white_24dp" />
+        <ImageView
+            android:id="@+id/deleteFromCartImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_of_less_dp"
+            android:src="@mipmap/ic_close_red_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/plusOneDishImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_of_more_dp"
+            android:src="@mipmap/ic_add_white_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/deleteFromCartImageView"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/counterTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginRight="@dimen/margin_of_some_dp"
             android:text="4"
             android:textAlignment="center"
             android:textColor="@color/absolutelyWhite"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/plusOneDishImageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/minusOneDishImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_of_some_dp"
+            android:src="@mipmap/ic_remove_white_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/counterTextView"
             app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
-
-    <ImageView
-        android:id="@+id/plusOneDishImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@mipmap/ic_add_white_24dp" />
-
-    <ImageView
-        android:id="@+id/deleteFromCartImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@mipmap/ic_close_red_24dp" />
 </LinearLayout>

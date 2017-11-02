@@ -66,4 +66,9 @@ public class Dish {
     public void setCalorificValue(double calorificValue) {
         this.calorificValue = calorificValue;
     }
+
+    @Override
+    public String toString() {
+        return "id = " + getId() + ", name = " + getName() + ", url = " + getUrl();
+    }
 }

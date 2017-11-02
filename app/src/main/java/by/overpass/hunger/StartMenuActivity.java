@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class StartMenuActivity extends AppCompatActivity {
     
@@ -57,8 +58,13 @@ public class StartMenuActivity extends AppCompatActivity {
         actionBarCartImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
-                startActivity(intent);
+                if (CartControl.currentOrderID == -1)
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.cart_is_empty),
+                            Toast.LENGTH_SHORT).show();
+                else {
+                    Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
