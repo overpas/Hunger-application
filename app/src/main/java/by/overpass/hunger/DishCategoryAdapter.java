@@ -1,7 +1,6 @@
 package by.overpass.hunger;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,7 @@ public class DishCategoryAdapter extends BaseAdapter {
         imageView.setImageResource(category.getImageResourceID());
         ViewGroup.LayoutParams params = convertView.getLayoutParams();
         if (params != null)
-            Log.d("DISHCATEGORYADAPTER", String.valueOf(params.width));
+            ///**debug**///Log.d("DISHCATEGORYADAPTER", String.valueOf(params.width));
         textView.setText(mContext.getString(category.getName()));
 
         return convertView;

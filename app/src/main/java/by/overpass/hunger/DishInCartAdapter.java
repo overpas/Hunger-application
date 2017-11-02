@@ -1,14 +1,13 @@
 package by.overpass.hunger;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
  * Created by MSI GE62 2QE Apache on 27.10.2017.
  */
 
-public class DishInCartAdapter extends BaseAdapter implements View.OnClickListener {
+public class DishInCartAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final List<Dish> dishes;
@@ -71,33 +70,57 @@ public class DishInCartAdapter extends BaseAdapter implements View.OnClickListen
         final ImageView deleteImageView = convertView.findViewById(R.id.deleteFromCartImageView);
 
         dishNameText.setText(dish.getName());
-        dishPriceText.setText(String.valueOf(dish.getPrice()) + " BYN");
-        dishQuantityText.setText(String.valueOf(CartControl.dishesWithQuantity.get(dish.getId())));
+        dishPriceText.setText(String.valueOf(dish.getPrice()) +
+                mContext.getResources().getString(R.string.currency));
+        dishQuantityText.setText(String.valueOf(CartController.dishesWithQuantity.get(dish.getId())));
+
+        View.OnClickListener plusMinusOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.deleteFromCartImageView:
+                        ///**debug**///Log.d("DISHINCARTADAPTER", "DELETE CLICKED");
+
+                        CartController.deleteDishFromCart(mContext, dish.getId());
+                        CartController.updateCartList(mContext);
+
+                        Intent intent1 = new Intent(mContext, CartActivity.class);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        mContext.startActivity(intent1);
+
+                        break;
+                    case R.id.plusOneDishImageView:
+                        ///**debug**///Log.d("DISHINCARTADAPTER", "PLUS CLICKED");
+
+                        CartController.addAnItem(mContext, dish.getId());
+                        CartController.updateCartList(mContext);
+
+                        Intent intent2 = new Intent(mContext, CartActivity.class);
+                        intent2.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        mContext.startActivity(intent2);
+
+                        break;
+                    case R.id.minusOneDishImageView:
+                        ///**debug**///Log.d("DISHINCARTADAPTER", "MINUS CLICKED");
+
+                        CartController.deleteAnItem(mContext, dish.getId());
+                        CartController.updateCartList(mContext);
+
+                        Intent intent3 = new Intent(mContext, CartActivity.class);
+                        intent3.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        mContext.startActivity(intent3);
+
+                        break;
+                }
+            }
+        };
 
         if (convertView != null) {
-            minusImageView.setOnClickListener(this);
-            plusImageView.setOnClickListener(this);
-            deleteImageView.setOnClickListener(this);
+            minusImageView.setOnClickListener(plusMinusOnClickListener);
+            plusImageView.setOnClickListener(plusMinusOnClickListener);
+            deleteImageView.setOnClickListener(plusMinusOnClickListener);
         }
 
         return convertView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.deleteFromCartImageView:
-                Toast.makeText(mContext, "DELETE CLICKED", Toast.LENGTH_SHORT);
-                Log.d("DISHINCARTADAPTER", "DELETE CLICKED");
-                break;
-            case R.id.plusOneDishImageView:
-                Toast.makeText(mContext, "PLUS CLICKED", Toast.LENGTH_SHORT);
-                Log.d("DISHINCARTADAPTER", "PLUS CLICKED");
-                break;
-            case R.id.minusOneDishImageView:
-                Toast.makeText(mContext, "MINUS CLICKED", Toast.LENGTH_SHORT);
-                Log.d("DISHINCARTADAPTER", "MINUS CLICKED");
-                break;
-        }
     }
 }

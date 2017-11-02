@@ -17,9 +17,16 @@
     <string name="create_new_order_http_link">http://192.168.0.102/hunger/CreateNewOrder.php</string>
     <string name="add_to_cart_http_link">http://192.168.0.102/hunger/AddToCart.php</string>
     <string name="fetch_order_dishes_http_link">http://192.168.0.102/hunger/FetchOrderDishes.php?orderID=</string>
+    <string name="get_total_price_http_link">http://192.168.0.102/hunger/GetTotalPrice.php?orderID=</string>
+    <string name="remove_items_http_link">http://192.168.0.102/hunger/RemoveItems.php</string>
+    <string name="remove_an_item_http_link">http://192.168.0.102/hunger/RemoveAnItem.php</string>
+    <string name="delete_order_http_link">http://192.168.0.102/hunger/DeleteOrder.php</string>
     <string name="fetch_dishes_http_link2">http://192.168.43.136/hunger/FetchDishes.php?categoryID=</string>
     <string name="fetch_dish_info_http_link2">http://192.168.43.136/hunger/FetchDishInfo.php?dishID=</string>
     <string name="add_to_cart">Добавить в корзину</string>
     <string name="added_to_cart">Добавлено</string>
     <string name="cart_is_empty">Корзина пуста</string>
+    <string name="order_this">Заказать</string>
+    <string name="currency"> BYN</string>
+    <string name="total">Итого: </string>
 </resources>

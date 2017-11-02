@@ -57,7 +57,7 @@ public class DishPreviewAdapter extends BaseAdapter {
         Picasso.with(mContext).load(dish.getUrl())
                 .placeholder(R.drawable.dish_placeholder).into(imageView);
         nameTextView.setText(dish.getName());
-        priceTextView.setText(String.valueOf(dish.getPrice()) + " BYN");
+        priceTextView.setText(String.valueOf(dish.getPrice()) + mContext.getResources().getString(R.string.currency));
 
         return convertView;
     }

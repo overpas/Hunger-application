@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class StartMenuActivity extends AppCompatActivity {
-    
+
     GridView gridView;
     ImageView actionBarCartImage;
 
@@ -34,7 +34,20 @@ public class StartMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start_menu);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar);
-        
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            ///**debug**///Log.d("STARTMENUACTIVITY", "extras not null!!!");
+
+            boolean isCartEmpty = extras.getBoolean("cartIsEmpty");
+
+            ///**debug**///Log.d("STARTMENUACTIVITY", "cartIsEmpty " + isCartEmpty);
+
+            if (isCartEmpty)
+                Toast.makeText(this, getResources().getString(R.string.cart_is_empty),
+                        Toast.LENGTH_SHORT).show();
+        }
+
         gridView = (GridView) findViewById(R.id.categoriesGridView);
         DishCategoryAdapter dishCategoryAdapter = new DishCategoryAdapter(this, categories);
         gridView.setAdapter(dishCategoryAdapter);
@@ -58,7 +71,7 @@ public class StartMenuActivity extends AppCompatActivity {
         actionBarCartImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CartControl.currentOrderID == -1)
+                if (CartController.currentOrderID == -1)
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.cart_is_empty),
                             Toast.LENGTH_SHORT).show();
                 else {
