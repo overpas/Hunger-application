@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -21,6 +22,14 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        boolean smthWentWrong;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            smthWentWrong = extras.getBoolean("didSmthGoWrong");
+            if (smthWentWrong)
+                Toast.makeText(this, "Sorry, something went wrong.", Toast.LENGTH_SHORT).show();
+        }
 
         if (CartController.currentOrderID == -1) {
             Intent intent = new Intent(this, StartMenuActivity.class);

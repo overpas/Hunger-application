@@ -49,10 +49,7 @@ public class DishCategoryAdapter extends BaseAdapter {
         final TextView textView = (TextView) convertView.findViewById(R.id.category_caption);
 
         imageView.setImageResource(category.getImageResourceID());
-        ViewGroup.LayoutParams params = convertView.getLayoutParams();
-        if (params != null)
-            ///**debug**///Log.d("DISHCATEGORYADAPTER", String.valueOf(params.width));
-        textView.setText(mContext.getString(category.getName()));
+        textView.setText(mContext.getResources().getString(category.getName()));
 
         return convertView;
     }

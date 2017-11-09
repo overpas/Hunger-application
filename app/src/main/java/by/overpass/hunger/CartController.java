@@ -21,6 +21,7 @@ public class CartController {
     public static int currentOrderID = -1;
     public static List<Dish> cartList = new ArrayList<>();
     public static Map<Integer, Integer> dishesWithQuantity = null;
+    public static double totalCost = 0;
 
     public static void updateCartList(Context context) {
         assert currentOrderID != -1;
@@ -199,6 +200,7 @@ public class CartController {
             e.printStackTrace();
         }
 
+        totalCost = totalPrice;
         return totalPrice;
     }
 

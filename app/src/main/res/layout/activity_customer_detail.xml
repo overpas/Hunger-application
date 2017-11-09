@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="by.overpass.hunger.CustomerDetailActivity">
+
+    <TextView
+        android:id="@+id/enterDataTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_of_some_dp"
+        android:text="@string/enterDataText"
+        android:textColor="@color/brown"
+        android:textSize="@dimen/huge_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/addressEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_of_even_more_dp"
+        android:layout_marginRight="@dimen/margin_of_even_more_dp"
+        android:layout_marginTop="@dimen/margin_of_some_dp"
+        android:layout_marginBottom="@dimen/margin_of_some_dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:lines="2"
+        android:textColor="@color/absolutelyBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterAddressTextView" />
+
+    <EditText
+        android:id="@+id/nameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_of_even_more_dp"
+        android:layout_marginRight="@dimen/margin_of_even_more_dp"
+        android:layout_marginTop="@dimen/margin_of_some_dp"
+        android:layout_marginBottom="@dimen/margin_of_some_dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/absolutelyBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterNameTextView" />
+
+    <EditText
+        android:id="@+id/phoneTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_of_even_more_dp"
+        android:layout_marginRight="@dimen/margin_of_even_more_dp"
+        android:layout_marginTop="@dimen/margin_of_some_dp"
+        android:layout_marginBottom="@dimen/margin_of_some_dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:textColor="@color/absolutelyBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterPhoneTextView" />
+
+    <Button
+        android:id="@+id/btnCompleteOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_of_some_dp"
+        android:background="@drawable/btn_hunger_generic"
+        android:text="@string/confirm_order_caption"
+        android:textColor="@color/priceColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/enterAddressTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_of_some_dp"
+        android:text="@string/enterAddressText"
+        android:textColor="@color/absolutelyBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterDataTextView" />
+
+    <TextView
+        android:id="@+id/enterNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_of_some_dp"
+        android:text="@string/enterNameText"
+        android:textColor="@color/absolutelyBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressEditText" />
+
+    <TextView
+        android:id="@+id/enterPhoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_of_some_dp"
+        android:text="@string/enterPhoneText"
+        android:textColor="@color/absolutelyBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+
+</android.support.constraint.ConstraintLayout>
