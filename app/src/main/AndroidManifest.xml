@@ -46,7 +46,16 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".FinalInfoActivity" />
-        <activity android:name=".CustomerDetailActivity"></activity>
+        <activity android:name=".CustomerDetailActivity" />
+        <activity
+            android:name=".LoadingDishesMenuActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".LoadingDishDescriptionActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".LoadingCartActivity"
+            android:noHistory="true" />
     </application>
 
 </manifest>

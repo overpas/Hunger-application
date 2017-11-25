@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,13 +20,15 @@ import java.util.List;
 public class DishInCartAdapter extends BaseAdapter {
 
     private final Context mContext;
+    private CartActivity cartActivity;
     private final List<Dish> dishes;
     private final List<Dish> alreadyDisplayedDishes = new ArrayList<>();
     private final List<Integer> alreadyDisplayedDishesIDs = new ArrayList<>();
 
-    public DishInCartAdapter(Context mContext, List<Dish> dishes) {
+    public DishInCartAdapter(Context mContext, List<Dish> dishes, CartActivity cartActivity) {
         this.mContext = mContext;
         this.dishes = dishes;
+        this.cartActivity = cartActivity;
 
         for (int i = 0; i < dishes.size(); i++) {
             if (!alreadyDisplayedDishesIDs.contains(dishes.get(i).getId())) {
@@ -70,7 +73,7 @@ public class DishInCartAdapter extends BaseAdapter {
         final ImageView deleteImageView = convertView.findViewById(R.id.deleteFromCartImageView);
 
         dishNameText.setText(dish.getName());
-        dishPriceText.setText(String.valueOf(dish.getPrice()) +
+        dishPriceText.setText(String.valueOf(dish.getPrice()) + " " +
                 mContext.getResources().getString(R.string.currency));
         dishQuantityText.setText(String.valueOf(CartController.dishesWithQuantity.get(dish.getId())));
 
@@ -80,9 +83,11 @@ public class DishInCartAdapter extends BaseAdapter {
                 switch (view.getId()) {
                     case R.id.deleteFromCartImageView:
                         ///**debug**///Log.d("DISHINCARTADAPTER", "DELETE CLICKED");
+                        cartActivity.showProgressBar();
 
                         CartController.deleteDishFromCart(mContext, dish.getId());
                         CartController.updateCartList(mContext);
+                        CartController.getTotalPrice(mContext, CartController.currentOrderID);
 
                         Intent intent1 = new Intent(mContext, CartActivity.class);
                         intent1.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -92,8 +97,9 @@ public class DishInCartAdapter extends BaseAdapter {
                     case R.id.plusOneDishImageView:
                         ///**debug**///Log.d("DISHINCARTADAPTER", "PLUS CLICKED");
 
-                        CartController.addAnItem(mContext, dish.getId());
+                        CartController.addAnItem(mContext, dish.getId(), cartActivity);
                         CartController.updateCartList(mContext);
+                        CartController.getTotalPrice(mContext, CartController.currentOrderID);
 
                         Intent intent2 = new Intent(mContext, CartActivity.class);
                         intent2.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -102,9 +108,11 @@ public class DishInCartAdapter extends BaseAdapter {
                         break;
                     case R.id.minusOneDishImageView:
                         ///**debug**///Log.d("DISHINCARTADAPTER", "MINUS CLICKED");
+                        cartActivity.showProgressBar();
 
                         CartController.deleteAnItem(mContext, dish.getId());
                         CartController.updateCartList(mContext);
+                        CartController.getTotalPrice(mContext, CartController.currentOrderID);
 
                         Intent intent3 = new Intent(mContext, CartActivity.class);
                         intent3.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

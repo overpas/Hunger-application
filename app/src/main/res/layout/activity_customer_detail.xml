@@ -27,15 +27,16 @@
         android:layout_marginTop="@dimen/margin_of_some_dp"
         android:layout_marginBottom="@dimen/margin_of_some_dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:lines="2"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:maxLines="6"
         android:textColor="@color/absolutelyBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enterAddressTextView" />
 
     <EditText
-        android:id="@+id/nameTextView"
+        android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_of_even_more_dp"
@@ -50,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/enterNameTextView" />
 
     <EditText
-        android:id="@+id/phoneTextView"
+        android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_of_even_more_dp"
@@ -72,6 +73,7 @@
         android:background="@drawable/btn_hunger_generic"
         android:text="@string/confirm_order_caption"
         android:textColor="@color/priceColor"
+        android:onClick="confirmOrder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -107,6 +109,18 @@
         android:textColor="@color/absolutelyBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+
+    <ProgressBar
+        android:id="@+id/finalInfoActivityProgressBar"
+        style="@style/LargerProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

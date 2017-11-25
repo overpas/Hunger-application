@@ -1,22 +1,24 @@
 package by.overpass.hunger;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
 
 public class DishesMenuActivity extends AppCompatActivity {
 
-    GridView gridView;
-    int categoryID = -1;
-    ImageView actionBarCartImage;
+    private GridView gridView;
+    private ImageView actionBarCartImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +42,37 @@ public class DishesMenuActivity extends AppCompatActivity {
         });
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null)
-            categoryID = extras.getInt("categoryID") + 1;
 
-        List<Dish> selectedDishesList = CartController.fetchDishes(this, categoryID);
+        //int categoryID = -1;
+        if (extras != null) {
+            //categoryID = extras.getInt("categoryID") + 1;
+            String fetchingError = extras.getString("fetchingError");
+
+            if (fetchingError != null)
+                Toast.makeText(this, fetchingError, Toast.LENGTH_SHORT).show();
+        }
 
         gridView = (GridView) findViewById(R.id.dishesGridView);
-        final DishPreviewAdapter dishPreviewAdapter = new DishPreviewAdapter(this, selectedDishesList);
+
+        //selectedDishesList = CartController.fetchDishes(this, categoryID);
+
+        //Log.d("NESTED ASYNCTASK", selectedDishesList.toString());
+
+        DishPreviewAdapter dishPreviewAdapter = null;
+        if (TransitionHelper.selectedDishesList != null) {
+            dishPreviewAdapter = new DishPreviewAdapter(this,
+                    TransitionHelper.selectedDishesList);
+        } else
+            retreat();
+
         gridView.setAdapter(dishPreviewAdapter);
 
+        final DishPreviewAdapter finalDishPreviewAdapter = dishPreviewAdapter;
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(gridView.getContext(), DishDescriptionActivity.class);
-                intent.putExtra("chosenDishID", (int) dishPreviewAdapter.getItemId(position));
+                Intent intent = new Intent(gridView.getContext(), LoadingDishDescriptionActivity.class);
+                intent.putExtra("chosenDishID", (int) finalDishPreviewAdapter.getItemId(position));
 
                 //debug
                 /*Log.d("DISHESMENUACTIVITY", "position = " + position + ", id[position] = " +
@@ -62,5 +81,12 @@ public class DishesMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void retreat() {
+        Intent intent = new Intent(this, StartMenuActivity.class);
+        intent.putExtra("fetchingError", getResources()
+                .getString(R.string.couldnt_load_data_message));
+        startActivity(intent);
     }
 }

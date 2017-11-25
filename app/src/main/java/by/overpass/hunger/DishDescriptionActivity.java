@@ -1,12 +1,16 @@
 package by.overpass.hunger;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,15 +18,17 @@ import com.squareup.picasso.Picasso;
 
 public class DishDescriptionActivity extends AppCompatActivity {
 
-    TextView dishDescriptionTextView;
-    TextView dishNameTextView;
-    TextView dishWeightTextView;
-    TextView dishPriceTextView;
-    TextView dishCalorificValueTextView;
-    ImageView dishImageView;
-    int chosenDishID;
-    ImageView actionBarCartImage;
-    Button addToCartButton;
+    private TextView dishDescriptionTextView;
+    private TextView dishNameTextView;
+    private TextView dishWeightTextView;
+    private TextView dishPriceTextView;
+    private TextView dishCalorificValueTextView;
+    private ImageView dishImageView;
+    private int chosenDishID;
+    private ImageView actionBarCartImage;
+    private Button addToCartButton;
+    private ProgressBar progressBar;
+    private LinearLayout infoLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +37,19 @@ public class DishDescriptionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar);
 
+        progressBar = (ProgressBar) findViewById(R.id.dishDescriptionActivityProgressBar);
+        infoLayout = (LinearLayout) findViewById(R.id.infoLayout);
+        addToCartButton = (Button) findViewById(R.id.btnAddToCart);
         dishDescriptionTextView = (TextView) findViewById(R.id.dishDescriptionTextView);
         dishCalorificValueTextView = (TextView) findViewById(R.id.dishCalorificValueTextView);
         dishPriceTextView = (TextView) findViewById(R.id.dishPriceTextView);
         dishWeightTextView = (TextView) findViewById(R.id.dishWeightTextView);
         dishNameTextView = (TextView) findViewById(R.id.dishNameTextView);
         dishImageView = (ImageView) findViewById(R.id.dishImageView);
+
+        dishImageView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_below));
+        addToCartButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_above));
+        infoLayout.startAnimation(AnimationUtils.loadAnimation(this, R.anim.tick_animation));
 
         actionBarCartImage = (ImageView) findViewById(R.id.actionBarCartImage);
         actionBarCartImage.setOnClickListener(new View.OnClickListener() {
@@ -46,7 +59,7 @@ public class DishDescriptionActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.cart_is_empty),
                             Toast.LENGTH_SHORT).show();
                 else {
-                    Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), LoadingCartActivity.class);
                     startActivity(intent);
                 }
             }
@@ -56,28 +69,56 @@ public class DishDescriptionActivity extends AppCompatActivity {
         if (extras != null)
             chosenDishID = extras.getInt("chosenDishID");
 
-        Dish chosenDish = CartController.fetchDishInfo(this, chosenDishID);
-
-        if (chosenDish != null) {
-            dishNameTextView.setText(chosenDish.getName());
-            dishWeightTextView.setText(chosenDish.getWeight() + " кг");
-            dishCalorificValueTextView.setText(chosenDish.getCalorificValue() + " ккал");
-            dishPriceTextView.setText(chosenDish.getPrice() + getResources().getString(R.string.currency));
-            dishDescriptionTextView.setText(chosenDish.getDescription());
-            Picasso.with(this).load(chosenDish.getUrl())
+        if (TransitionHelper.chosenDish != null) {
+            dishNameTextView.setText(TransitionHelper.chosenDish.getName());
+            dishWeightTextView.setText(TransitionHelper.chosenDish.getWeight() + " " +
+                    getResources().getString(R.string.weight_unit));
+            dishCalorificValueTextView.setText(TransitionHelper.chosenDish.getCalorificValue() + " " +
+                    getResources().getString(R.string.calorific_value_unit));
+            dishPriceTextView.setText(TransitionHelper.chosenDish.getPrice() + " " +
+                    getResources().getString(R.string.currency));
+            dishDescriptionTextView.setText(TransitionHelper.chosenDish.getDescription());
+            Picasso.with(this).load(TransitionHelper.chosenDish.getUrl())
                     .placeholder(R.drawable.dish_placeholder).into(dishImageView);
-        }
+        } else
+            retreat();
+    }
+
+    private void retreat() {
+        Intent intent = new Intent(this, DishesMenuActivity.class);
+        intent.putExtra("fetchingError",
+                getResources().getString(R.string.couldnt_load_data_message));
+        startActivity(intent);
     }
 
     public void toCart(View v) {
-        if (CartController.currentOrderID == -1)
-            CartController.createNewOrder(this);
+        progressBar.setVisibility(View.VISIBLE);
+        new ToCart().execute();
+    }
 
-        CartController.addToCart(this, chosenDishID);
+    class ToCart extends AsyncTask<Void, Void, Void> {
 
-        CartController.updateCartList(this);
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
 
-        if (CartController.currentOrderID != -1)
-            Toast.makeText(this, getResources().getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (CartController.currentOrderID == -1)
+                CartController.createNewOrder(getApplicationContext());
+
+            CartController.addToCart(getApplicationContext(), chosenDishID);
+
+            CartController.updateCartList(getApplicationContext());
+
+            progressBar.setVisibility(View.INVISIBLE);
+            if (CartController.currentOrderID != -1)
+                Toast.makeText(getApplicationContext(),
+                        getResources().getString(R.string.added_to_cart), Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(getApplicationContext(), getResources()
+                        .getString(R.string.couldnt_submit_data_message), Toast.LENGTH_SHORT).show();
+        }
     }
 }

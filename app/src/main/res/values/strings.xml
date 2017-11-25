@@ -12,21 +12,25 @@
     <string name="salad_caption">Салаты</string>
     <string name="soup_caption">Супы</string>
     <string name="sushi_caption">Суши и роллы</string>
-    <string name="fetch_dishes_http_link">http://192.168.1.2/hunger/FetchDishes.php?categoryID=</string>
-    <string name="fetch_dish_info_http_link">http://192.168.1.2/hunger/FetchDishInfo.php?dishID=</string>
-    <string name="create_new_order_http_link">http://192.168.1.2/hunger/CreateNewOrder.php</string>
-    <string name="add_to_cart_http_link">http://192.168.1.2/hunger/AddToCart.php</string>
-    <string name="fetch_order_dishes_http_link">http://192.168.1.2/hunger/FetchOrderDishes.php?orderID=</string>
-    <string name="get_total_price_http_link">http://192.168.1.2/hunger/GetTotalPrice.php?orderID=</string>
-    <string name="remove_items_http_link">http://192.168.1.2/hunger/RemoveItems.php</string>
-    <string name="remove_an_item_http_link">http://192.168.1.2/hunger/RemoveAnItem.php</string>
-    <string name="delete_order_http_link">http://192.168.1.2/hunger/DeleteOrder.php</string>
+    <string name="fetch_dishes_http_link">http://overpass.000webhostapp.com/FetchDishes.php?categoryID=</string>
+    <string name="fetch_dish_info_http_link">http://overpass.000webhostapp.com/FetchDishInfo.php?dishID=</string>
+    <string name="create_new_order_http_link">http://overpass.000webhostapp.com/CreateNewOrder.php</string>
+    <string name="add_to_cart_http_link">http://overpass.000webhostapp.com/AddToCart.php</string>
+    <string name="fetch_order_dishes_http_link">http://overpass.000webhostapp.com/FetchOrderDishes.php?orderID=</string>
+    <string name="get_total_price_http_link">http://overpass.000webhostapp.com/GetTotalPrice.php?orderID=</string>
+    <string name="remove_items_http_link">http://overpass.000webhostapp.com/RemoveItems.php</string>
+    <string name="remove_an_item_http_link">http://overpass.000webhostapp.com/RemoveAnItem.php</string>
+    <string name="delete_order_http_link">http://overpass.000webhostapp.com/DeleteOrder.php</string>
+    <string name="create_new_customer_http_link">http://overpass.000webhostapp.com/CreateNewCustomer.php</string>
+    <string name="complete_order_http_link">http://overpass.000webhostapp.com/CompleteOrder.php</string>
     <string name="add_to_cart">Добавить в корзину</string>
     <string name="added_to_cart">Добавлено</string>
     <string name="cart_is_empty">Корзина пуста</string>
     <string name="order_this">Заказать</string>
-    <string name="currency"> BYN</string>
-    <string name="total">Итого: </string>
+    <string name="currency">BYN</string>
+    <string name="total">Итого:</string>
+    <string name="weight_unit">кг</string>
+    <string name="calorific_value_unit">ккал</string>
     <string name="textImNotHere">Нет, я не здесь</string>
     <string name="textImHere">Да, я здесь</string>
     <string name="confirm_order_caption">Подтвердить</string>
@@ -34,4 +38,12 @@
     <string name="enterNameText">Имя:</string>
     <string name="enterAddressText">Адрес:</string>
     <string name="enterDataText">Введите данные</string>
+    <string name="cannot_process_order_excuse">Извините, ваш заказ не подтвержден</string>
+    <string name="order_confirmed_caption">Ваш заказ принят!</string>
+    <string name="go_to_start_menu_caption">В главное меню</string>
+    <string name="couldnt_load_data_message">Не удалось загрузить данные</string>
+    <string name="couldnt_submit_data_message">Не удалось отправить данные</string>
+    <string name="enterNameMessage">Пожалуйста, введите имя</string>
+    <string name="enterPhoneMessage">Пожалуйста, введите номер телефона</string>
+    <string name="enterAddressMessage">Пожалуйста, введите адрес</string>
 </resources>

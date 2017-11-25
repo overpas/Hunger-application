@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 public class StartMenuActivity extends AppCompatActivity {
 
-    GridView gridView;
-    ImageView actionBarCartImage;
+    private GridView gridView;
+    private ImageView actionBarCartImage;
 
     private DishCategory[] categories = {
             new DishCategory(R.string.complex_dinner_caption, R.drawable.generic_complex_dinner),
@@ -40,6 +40,10 @@ public class StartMenuActivity extends AppCompatActivity {
             ///**debug**///Log.d("STARTMENUACTIVITY", "extras not null!!!");
 
             boolean isCartEmpty = extras.getBoolean("cartIsEmpty");
+            String fetchingError = extras.getString("fetchingError");
+
+            if (fetchingError != null)
+                Toast.makeText(this, fetchingError, Toast.LENGTH_SHORT).show();
 
             ///**debug**///Log.d("STARTMENUACTIVITY", "cartIsEmpty " + isCartEmpty);
 
@@ -61,7 +65,7 @@ public class StartMenuActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(gridView.getContext(), DishesMenuActivity.class);
+                Intent intent = new Intent(gridView.getContext(), LoadingDishesMenuActivity.class);
                 intent.putExtra("categoryID", i);
                 startActivity(intent);
             }

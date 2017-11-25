@@ -2,6 +2,9 @@ package by.overpass.hunger;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,12 +22,17 @@ import java.util.concurrent.ExecutionException;
 
 public class CartController {
     public static int currentOrderID = -1;
+    public static int currentCustomerID = -1;
     public static List<Dish> cartList = new ArrayList<>();
     public static Map<Integer, Integer> dishesWithQuantity = null;
     public static double totalCost = 0;
+    public static boolean orderSuccessful = false;
+    public static String answer;
 
     public static void updateCartList(Context context) {
         assert currentOrderID != -1;
+
+        Log.d("CartControl", String.valueOf(currentOrderID));
 
         String link = context.getResources().getString(R.string.fetch_order_dishes_http_link)
                 + currentOrderID;
@@ -38,7 +46,9 @@ public class CartController {
 
         try {
             stringJSON = orderDishesFetcher.get();
-            ///**debug**///Log.d("CartControl", stringJSON);
+            ///**debug**///
+            Log.d("CartControl", stringJSON);
+
             arrayOfDishes = new JSONArray(stringJSON);
             dishesWithQuantity = new HashMap<>();
 
@@ -64,7 +74,9 @@ public class CartController {
 
         cartList = new ArrayList<>(orderDishesList);
 
-        ///**debug**///Log.d("CartControl", cartList.toString());
+        ///**debug**///
+        Log.d("CartControl", cartList.toString());
+        Log.d("CartControl", dishesWithQuantity.toString());
 
         for (Map.Entry<Integer, Integer> pair : dishesWithQuantity.entrySet()) {
             int count = 0;
@@ -80,7 +92,9 @@ public class CartController {
             currentOrderID = -1;
         }
 
-        ///**debug**///Log.d("CartControl", dishesWithQuantity.toString());
+        Log.d("3RD STEP", "UPDATED CART LIST");
+        ///**debug**///
+        Log.d("CartControl", dishesWithQuantity.toString());
     }
 
     private static void deleteOrder(Context context, int currentOrderID) {
@@ -93,7 +107,9 @@ public class CartController {
     public static void createNewOrder(Context context) {
         String newOrderLink = context.getResources().getString(R.string.create_new_order_http_link);
         AsyncTask<String, Void, String> creator = new CreatorAndDeleter().execute(newOrderLink);
+
         try {
+            Log.d("CREATED ORDER", String.valueOf(creator.get()));
             int newlyInsertedID = Integer.parseInt(creator.get());
             CartController.currentOrderID = newlyInsertedID;
         } catch (InterruptedException e) {
@@ -101,6 +117,7 @@ public class CartController {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        Log.d("1ST STEP", "CREATED NEW ORDER");
     }
 
     public static void addToCart(Context context, int chosenDishID) {
@@ -110,6 +127,26 @@ public class CartController {
 
         AsyncTask<String, Void, String> adder = new CreatorAndDeleter().execute(cartLink, dishID,
                 orderID);
+
+        Log.d("2ND STEP", "ADDED TO CART");
+    }
+
+    public static Dish fetchDishInfoParser(String string) throws JSONException {
+        JSONArray arrayOfDishes;
+        JSONObject jsonObject;
+        Dish chosenDish = null;
+
+        arrayOfDishes = new JSONArray(string);
+        jsonObject = arrayOfDishes.getJSONObject(0);
+
+        chosenDish = new Dish(jsonObject.getInt("id"), jsonObject.getInt("category_id"),
+                jsonObject.getString("name"), jsonObject.getString("url").trim(),
+                jsonObject.getDouble("price"));
+        chosenDish.setCalorificValue(jsonObject.getDouble("calorific_value"));
+        chosenDish.setDescription(jsonObject.getString("description").trim());
+        chosenDish.setWeight(jsonObject.getDouble("weight"));
+
+        return chosenDish;
     }
 
     public static Dish fetchDishInfo(Context context, int chosenDishID) {
@@ -143,6 +180,23 @@ public class CartController {
         return chosenDish;
     }
 
+    public static List<Dish> fetchDishesParser(String string) throws JSONException {
+        JSONArray arrayOfDishes;
+        JSONObject jsonObject;
+        List<Dish> selectedDishesList = new ArrayList<>();
+
+        arrayOfDishes = new JSONArray(string);
+
+        for (int i = 0; i < arrayOfDishes.length(); i++) {
+            jsonObject = arrayOfDishes.getJSONObject(i);
+            selectedDishesList.add(new Dish(jsonObject.getInt("id"),
+                    jsonObject.getInt("category_id"), jsonObject.getString("name"),
+                    jsonObject.getString("url").trim(), jsonObject.getDouble("price")));
+        }
+
+        return selectedDishesList;
+    }
+
     public static List<Dish> fetchDishes(Context context, int categoryID) {
         String link = context.getResources().getString(R.string.fetch_dishes_http_link) + categoryID;
         AsyncTask<String, Void, String> dishesFetcher = new DishesFetcher().execute(link);
@@ -172,6 +226,24 @@ public class CartController {
         }
 
         return selectedDishesList;
+    }
+
+    public static double totalPriceParser(String string) throws JSONException {
+        JSONArray arrayOfDishes;
+        JSONObject jsonObject = null;
+        double totalPrice = -1;
+
+        arrayOfDishes = new JSONArray(string);
+
+        if (arrayOfDishes.length() > 0) {
+            jsonObject = arrayOfDishes.getJSONObject(0);
+        }
+
+        if (jsonObject != null)
+            totalPrice = jsonObject.getDouble("SUM(price)");
+
+        totalCost = totalPrice;
+        return totalPrice;
     }
 
     public static double getTotalPrice(Context context, int orderID) {
@@ -222,7 +294,43 @@ public class CartController {
                 dishIDString, orderID);
     }
 
-    public static void addAnItem(Context context, int dishID) {
+    public static void addAnItem(Context context, int dishID, CartActivity cartActivity) {
+        cartActivity.showProgressBar();
         addToCart(context, dishID);
+    }
+
+    public static void createNewCustomer(Context context, String customerName, String customerPhone) {
+        String newCustomerLink = context.getResources().getString(R.string.create_new_customer_http_link);
+        AsyncTask<String, Void, String> creator = new CustomerCreator().execute(newCustomerLink,
+                customerName, customerPhone);
+        try {
+            int newlyInsertedID = Integer.parseInt(creator.get());
+            CartController.currentCustomerID = newlyInsertedID;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void completeOrder(Context context, String destination) {
+        assert currentOrderID != -1 && currentCustomerID != -1;
+
+        String link = context.getResources().getString(R.string.complete_order_http_link);
+        String orderIDString = String.valueOf(CartController.currentOrderID);
+        String customerIDString = String.valueOf(CartController.currentCustomerID);
+
+        AsyncTask<String, Void, String> orderCompleter = new OrderCompleter().execute(link,
+                orderIDString, customerIDString, destination);
+
+        try {
+            String result = orderCompleter.get();
+            if (result.trim().equals("Updated"))
+                orderSuccessful = true;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 }

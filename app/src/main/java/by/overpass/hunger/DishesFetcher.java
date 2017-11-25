@@ -1,6 +1,10 @@
 package by.overpass.hunger;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGetHC4;
@@ -51,7 +55,12 @@ public class DishesFetcher extends AsyncTask<String, Void, String> {
     }
 
     @Override
+    protected void onPreExecute() {
+
+    }
+
+    @Override
     protected void onPostExecute(String aVoid) {
-        super.onPostExecute(aVoid);
+
     }
 }

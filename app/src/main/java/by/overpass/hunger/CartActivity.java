@@ -5,18 +5,21 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class CartActivity extends AppCompatActivity {
 
-    ListView listView;
-    ImageView actionBarGoToMainMenu;
-    TextView actionBarTotalPrice;
-    Button btnOrder;
+    private ListView listView;
+    private ImageView actionBarGoToMainMenu;
+    private TextView actionBarTotalPrice;
+    private Button btnOrder;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +43,26 @@ public class CartActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.cart_action_bar);
 
+        progressBar = (ProgressBar) findViewById(R.id.cartActivityProgressBar);
         listView = (ListView) findViewById(R.id.cartContents);
         actionBarGoToMainMenu = (ImageView) findViewById(R.id.actionBarGoToMainMenu);
         actionBarTotalPrice = (TextView) findViewById(R.id.actionBarTotalPrice);
         btnOrder = (Button) findViewById(R.id.btnOrder);
 
+        btnOrder.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_above));
+
         //debug
-        /*if (CartControl.cartList == null)
+        /*if (CartController.cartList == null)
             Toast.makeText(this, "NULL", Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(this, CartControl.cartList.toString(), Toast.LENGTH_SHORT).show();*/
+            Toast.makeText(this, CartController.cartList.toString(), Toast.LENGTH_SHORT).show();*/
 
-        DishInCartAdapter dishInCartAdapter = new DishInCartAdapter(this, CartController.cartList);
+        DishInCartAdapter dishInCartAdapter = new DishInCartAdapter(this,
+                CartController.cartList, this);
         listView.setAdapter(dishInCartAdapter);
 
-        actionBarTotalPrice.setText(getResources().getString(R.string.total) + String.format("%.1f",
-                CartController.getTotalPrice(this, CartController.currentOrderID)) +
+        actionBarTotalPrice.setText(getResources().getString(R.string.total) + " " +
+                String.format("%.1f", CartController.totalCost) + " " +
                 getResources().getString(R.string.currency));
 
         actionBarGoToMainMenu.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +78,15 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(btnOrder.getContext(), MapsActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+    public void showProgressBar() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.VISIBLE);
             }
         });
     }

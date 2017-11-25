@@ -12,10 +12,10 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +26,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -70,6 +69,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         textView = (TextView) findViewById(R.id.addressTextView);
         confirmationButton = (Button) findViewById(R.id.btnImHere);
         denialButton = (Button) findViewById(R.id.btnImNotHere);
+
+        confirmationButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_above));
+        denialButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_above));
 
         View.OnClickListener confirmationAndDenialOnClickListener = new View.OnClickListener() {
             @Override
