@@ -10,7 +10,7 @@
 		die("Connection failed: " . $conn->connect_error);
 	} 
 
-	$sql = "SELECT id, name, url, price FROM dishes WHERE category_id=$categoryID ORDER BY id";
+	$sql = "SELECT id, name, url, price, category_id FROM dishes WHERE category_id=$categoryID ORDER BY id";
 
 	$result = $conn->query($sql);
 
