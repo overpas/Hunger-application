@@ -91,6 +91,7 @@ public class DishInCartAdapter extends BaseAdapter {
 
                         Intent intent1 = new Intent(mContext, CartActivity.class);
                         intent1.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         mContext.startActivity(intent1);
 
                         break;
@@ -103,6 +104,7 @@ public class DishInCartAdapter extends BaseAdapter {
 
                         Intent intent2 = new Intent(mContext, CartActivity.class);
                         intent2.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent2.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         mContext.startActivity(intent2);
 
                         break;
@@ -116,6 +118,7 @@ public class DishInCartAdapter extends BaseAdapter {
 
                         Intent intent3 = new Intent(mContext, CartActivity.class);
                         intent3.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        intent3.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         mContext.startActivity(intent3);
 
                         break;
