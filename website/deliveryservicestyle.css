@@ -1,0 +1,51 @@
+html, body {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+input {
+	width: 6%;
+	height: 4%;
+	min-height: 30px;
+}
+
+form {
+	padding: 1%;
+	background-color: #7D97B0;
+}
+
+#btnRefresh {
+	vertical-align: middle;
+	border-radius: 4px;
+	width: auto;
+	height: 4%;
+	min-height: 30px;
+}
+
+#numberOfOrdersShown {
+	vertical-align: middle;
+}
+
+.showlabel {
+	color: #ffd11a;
+	font-size: 140%;
+}
+
+#table {
+	margin: 0px;
+	padding: 0px;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#table td {
+    text-align: center; 
+    vertical-align: middle;
+}
+
+#table td:last-child {
+	color: red;
+	font-weight: bold;
+	cursor: pointer;
+}

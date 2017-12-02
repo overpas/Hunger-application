@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hunger: заказы. Вход</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="loginstyle.css">
+</head>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!--script type="text/javascript">
+	$('#btnGoToDelivery').click(function() {
+	    console.log("CLICK!");
+		var password = document.getElementById("passwordInput").value;
+		console.log(password);
+
+		$.post('../CheckPassword.php', {password: password}, function(data, textStatus, xhr) {
+			console.log(data);
+			if (data === "Confirmed") {
+				console.log("confirmed");
+				//goToDeliveryService();
+				window.open("deliveryservice.php?numberOfOrdersShown=50", "_self");
+			} else {
+				console.log("denied");
+				alert("Неверный ключ.");
+			}
+		});
+	});
+</script-->
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#btnGoToDelivery").click(function(e) {
+            e.preventDefault();
+            
+            var password = document.getElementById("passwordInput").value;
+            
+            $.post('../CheckPassword.php', {password: password}, function(data, textStatus, xhr) {
+			    console.log(data);
+			    if (data === "Confirmed") {
+			    	console.log("confirmed");
+				    //goToDeliveryService();
+				    window.open("deliveryservice.php?numberOfOrdersShown=50", "_self");
+			    } else {
+				    console.log("denied");
+				    alert("Неверный ключ.");
+			    }
+		    });
+            
+            e.preventDefault();
+        });
+
+    });
+</script>
+<body>
+	<div class="login-page">
+		<div class="form">
+			<form class="login-form">
+				<input type="password" name="password" id="passwordInput" placeholder="введите ключ для входа"/>
+				<button id="btnGoToDelivery">Войти</button>
+			</form>
+		</div>
+	</div>
+</body>
+<!--script type="text/javascript">
+	function checkPassword() {
+		var password = document.getElementById("passwordInput").value;
+		console.log(password);
+		
+		e.preventDefault();
+		$.post('../CheckPassword.php', {password: password}, function(data, textStatus, xhr) {
+			console.log(data);
+			if (data === "Confirmed") {
+				console.log("confirmed");
+				goToDeliveryService();
+			} else {
+				console.log("denied");
+				alert("Неверный ключ.");
+			}
+		});
+	}
+</script>
+<script type="text/javascript">
+	function goToDeliveryService() {
+		console.log("YES");
+		window.open("deliveryservice.php?numberOfOrdersShown=50", "_self");
+	}
+</script-->
+</html>
