@@ -40,8 +40,12 @@
 	transition: all 0.3 ease;
 	cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
-	background: #7D97B0;
+.form button:hover {
+	background: #586f84;
+}
+.form button:active {
+	background: #586f84;
+	transform: translateY(4px);
 }
 .form .message {
 	margin: 15px 0 0;
@@ -90,7 +94,7 @@
 }
 
 body {
-	background: #7D97B0; /* fallback for old browsers */
+	background: #7D97B0;
 	background: -webkit-linear-gradient(right, #7D97B0, #758ea5);
 	background: -moz-linear-gradient(right, #7D97B0, #758ea5);
 	background: -o-linear-gradient(right, #7D97B0, #758ea5);
