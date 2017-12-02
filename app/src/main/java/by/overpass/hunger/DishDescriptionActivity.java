@@ -38,6 +38,7 @@ public class DishDescriptionActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.action_bar);
 
         progressBar = (ProgressBar) findViewById(R.id.dishDescriptionActivityProgressBar);
+        progressBar.bringToFront();
         infoLayout = (LinearLayout) findViewById(R.id.infoLayout);
         addToCartButton = (Button) findViewById(R.id.btnAddToCart);
         dishDescriptionTextView = (TextView) findViewById(R.id.dishDescriptionTextView);
@@ -49,7 +50,8 @@ public class DishDescriptionActivity extends AppCompatActivity {
 
         dishImageView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_below));
         addToCartButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.from_above));
-        infoLayout.startAnimation(AnimationUtils.loadAnimation(this, R.anim.tick_animation));
+        if (infoLayout != null)
+            infoLayout.startAnimation(AnimationUtils.loadAnimation(this, R.anim.tick_animation));
 
         actionBarCartImage = (ImageView) findViewById(R.id.actionBarCartImage);
         actionBarCartImage.setOnClickListener(new View.OnClickListener() {

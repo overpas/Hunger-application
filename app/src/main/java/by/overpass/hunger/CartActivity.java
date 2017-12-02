@@ -29,9 +29,15 @@ public class CartActivity extends AppCompatActivity {
         boolean smthWentWrong;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
+            boolean shouldShowMessages = true;
+            if (savedInstanceState != null)
+                shouldShowMessages = savedInstanceState.getBoolean("shouldShowMessages");
+
             smthWentWrong = extras.getBoolean("didSmthGoWrong");
-            if (smthWentWrong)
-                Toast.makeText(this, "Sorry, something went wrong.", Toast.LENGTH_SHORT).show();
+            if (smthWentWrong && shouldShowMessages)
+                Toast.makeText(this,
+                        getResources().getString(R.string.sorry_smth_went_wrong_caption),
+                        Toast.LENGTH_SHORT).show();
         }
 
         if (CartController.currentOrderID == -1) {
@@ -80,6 +86,12 @@ public class CartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("shouldShowMessages", false);
+        super.onSaveInstanceState(outState);
     }
 
     public void showProgressBar() {

@@ -46,4 +46,6 @@
     <string name="enterNameMessage">Пожалуйста, введите имя</string>
     <string name="enterPhoneMessage">Пожалуйста, введите номер телефона</string>
     <string name="enterAddressMessage">Пожалуйста, введите адрес</string>
+    <string name="loading_caption">Загрузка...</string>
+    <string name="sorry_smth_went_wrong_caption">Извините, что-то пошло не так</string>
 </resources>

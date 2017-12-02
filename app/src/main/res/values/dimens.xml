@@ -9,4 +9,5 @@
     <dimen name="dish_name_size">18sp</dimen>
     <dimen name="huge_text_size">22sp</dimen>
     <dimen name="margin_of_even_more_dp">30dp</dimen>
+    <dimen name="margin_of_insane_dp">50dp</dimen>
 </resources>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="by.overpass.hunger.CustomerDetailActivity">
+
+    <TextView
+        android:id="@+id/enterDataTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_of_some_dp"
+        android:text="@string/enterDataText"
+        android:textColor="@color/brown"
+        android:textSize="@dimen/huge_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/nameAndPhoneContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintBottom_toTopOf="@id/btnCompleteOrder"
+        app:layout_constraintRight_toRightOf="@id/finalInfoActivityProgressBar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enterDataTextView">
+
+        <TextView
+            android:id="@+id/enterNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_of_some_dp"
+            android:text="@string/enterNameText"
+            android:textAlignment="center"
+            android:textColor="@color/absolutelyBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_of_some_dp"
+            android:layout_marginLeft="@dimen/margin_of_even_more_dp"
+            android:layout_marginRight="@dimen/margin_of_even_more_dp"
+            android:layout_marginTop="@dimen/margin_of_some_dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textColor="@color/absolutelyBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enterNameTextView" />
+
+        <TextView
+            android:id="@+id/enterPhoneTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_of_some_dp"
+            android:text="@string/enterPhoneText"
+            android:textAlignment="center"
+            android:textColor="@color/absolutelyBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameEditText" />
+
+        <EditText
+            android:id="@+id/phoneEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_of_some_dp"
+            android:layout_marginLeft="@dimen/margin_of_even_more_dp"
+            android:layout_marginRight="@dimen/margin_of_even_more_dp"
+            android:layout_marginTop="@dimen/margin_of_some_dp"
+            android:ems="10"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:textColor="@color/absolutelyBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enterPhoneTextView" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/addressAndButtonContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="50dp"
+        app:layout_constraintBottom_toTopOf="@id/btnCompleteOrder"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/finalInfoActivityProgressBar"
+        app:layout_constraintTop_toBottomOf="@id/enterDataTextView">
+
+        <TextView
+            android:id="@+id/enterAddressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_of_some_dp"
+            android:text="@string/enterAddressText"
+            android:textAlignment="center"
+            android:textColor="@color/absolutelyBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/addressEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_of_some_dp"
+            android:layout_marginLeft="@dimen/margin_of_even_more_dp"
+            android:layout_marginRight="@dimen/margin_of_even_more_dp"
+            android:layout_marginTop="@dimen/margin_of_some_dp"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:maxLines="6"
+            android:minLines="2"
+            android:textColor="@color/absolutelyBlack"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enterAddressTextView" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btnCompleteOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_of_some_dp"
+        android:background="@drawable/btn_hunger_generic"
+        android:onClick="confirmOrder"
+        android:text="@string/confirm_order_caption"
+        android:textColor="@color/priceColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/finalInfoActivityProgressBar"
+        style="@style/LargerProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

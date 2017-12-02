@@ -45,10 +45,13 @@ public class DishesMenuActivity extends AppCompatActivity {
 
         //int categoryID = -1;
         if (extras != null) {
+            boolean shouldShowMessages = true;
+            if (savedInstanceState != null)
+                shouldShowMessages = savedInstanceState.getBoolean("shouldShowMessages");
             //categoryID = extras.getInt("categoryID") + 1;
             String fetchingError = extras.getString("fetchingError");
 
-            if (fetchingError != null)
+            if (fetchingError != null && shouldShowMessages)
                 Toast.makeText(this, fetchingError, Toast.LENGTH_SHORT).show();
         }
 
@@ -81,6 +84,12 @@ public class DishesMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("shouldShowMessages", false);
+        super.onSaveInstanceState(outState);
     }
 
     private void retreat() {
