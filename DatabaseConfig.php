@@ -1,15 +1,15 @@
 <?php
 
 //Define your host here.
-$HostName = "localhost";
+$HostName = "nope";
 
 //Define your database username here.
-$HostUser = "root";
+$HostUser = "nope";
 
 //Define your database password here.
-$HostPass = "1998";
+$HostPass = "nope";
 
 //Define your database name here.
-$DatabaseName = "hunger_db";
+$DatabaseName = "nope";
 
 ?>
