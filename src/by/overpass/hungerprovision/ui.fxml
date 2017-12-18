@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="358.0" prefWidth="957.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="by.overpass.hungerprovision.Controller">
+	<children>
+		<SplitPane dividerPositions="0.62" layoutX="11.0" layoutY="21.0"
+			prefHeight="358.0" prefWidth="957.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="0.0">
+			<items>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0"
+					prefWidth="100.0">
+					<children>
+						<TableView fx:id="tblViewIngredients" layoutX="78.0"
+							layoutY="25.0" prefHeight="356.0" prefWidth="555.0"
+							AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+							AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+							<columns>
+								<TableColumn fx:id="clmnName" prefWidth="114.0"
+									text="Название" />
+								<TableColumn fx:id="clmnQuantity" prefWidth="75.0"
+									text="Количество" />
+								<TableColumn fx:id="clmnProvider" prefWidth="114.0"
+									text="Поставщик" />
+								<TableColumn fx:id="clmnImportDate" prefWidth="88.0"
+									text="Дата привоза" />
+								<TableColumn fx:id="clmnExpiryDate" prefWidth="195.0"
+									text="Дата истечения срока годности" />
+							</columns>
+						</TableView>
+					</children>
+				</AnchorPane>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0"
+					prefWidth="401.0">
+					<children>
+						<GridPane layoutX="14.0" layoutY="14.0" prefHeight="262.0"
+							prefWidth="333.0">
+							<columnConstraints>
+								<ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES"
+									maxWidth="187.0" minWidth="10.0" prefWidth="133.0" />
+								<ColumnConstraints fillWidth="false" hgrow="SOMETIMES"
+									maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0"
+									vgrow="SOMETIMES" />
+							</rowConstraints>
+							<children>
+								<Label text="Название:">
+									<padding>
+										<Insets right="5.0" />
+									</padding>
+								</Label>
+								<Label text="Единицы:" GridPane.rowIndex="1">
+									<padding>
+										<Insets right="5.0" />
+									</padding>
+								</Label>
+								<Label text="Количество:" GridPane.rowIndex="2">
+									<padding>
+										<Insets right="5.0" />
+									</padding>
+								</Label>
+								<Label text="Поставщик:" GridPane.rowIndex="3">
+									<padding>
+										<Insets right="5.0" />
+									</padding>
+								</Label>
+								<Label text="Дата привоза:" GridPane.rowIndex="4">
+									<padding>
+										<Insets right="5.0" />
+									</padding>
+								</Label>
+								<Label text="Дата истечения:" GridPane.rowIndex="5">
+									<padding>
+										<Insets right="5.0" />
+									</padding>
+								</Label>
+								<TextField fx:id="txtName" prefWidth="190.0" disable="false"
+									GridPane.columnIndex="1" />
+								<HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0"
+									GridPane.columnIndex="1" GridPane.rowIndex="1">
+									<children>
+										<RadioButton fx:id="rbtnKilos" mnemonicParsing="false"
+											text="кг">
+											<toggleGroup>
+												<ToggleGroup fx:id="groupUnits" />
+											</toggleGroup>
+										</RadioButton>
+										<RadioButton fx:id="rbtnPieces" mnemonicParsing="false"
+											text="шт" toggleGroup="$groupUnits" />
+									</children>
+									<padding>
+										<Insets left="2.0" top="8.0" />
+									</padding>
+								</HBox>
+								<TextField fx:id="txtQuantity" prefHeight="25.0"
+									prefWidth="190.0" GridPane.columnIndex="1" 
+									GridPane.rowIndex="2" />
+								<TextField fx:id="txtProvider" prefHeight="25.0"
+									prefWidth="190.0" GridPane.columnIndex="1" 
+									GridPane.rowIndex="3" />
+								<DatePicker fx:id="dtpckrImportDate"
+									GridPane.columnIndex="1" prefWidth="190.0" 
+									GridPane.rowIndex="4" />
+								<DatePicker fx:id="dtpckrExpiryDate"
+									GridPane.columnIndex="1" prefWidth="190.0" 
+									GridPane.rowIndex="5" />
+							</children>
+						</GridPane>
+						<HBox layoutX="16.0" layoutY="222.0" prefHeight="33.0"
+							prefWidth="315.0" spacing="5.0" alignment="CENTER">
+							<children>
+								<Button fx:id="btnSave" mnemonicParsing="false"
+									onAction="#saveInfo" text="Сохранить" />
+								<Button fx:id="btnUpdate" disable="false"
+									mnemonicParsing="false" 
+									onAction="#updateInfo" text="Обновить" />
+								<Button fx:id="btnDelete" disable="false"
+									mnemonicParsing="false" 
+									onAction="#deleteInfo" text="Удалить" />
+								<Button mnemonicParsing="false" 
+									onAction="#createNewRecord"
+									text="Новый" />
+							</children>
+						</HBox>
+					</children>
+				</AnchorPane>
+			</items>
+		</SplitPane>
+	</children>
+</AnchorPane>

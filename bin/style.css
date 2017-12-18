@@ -1,0 +1,38 @@
+.root {
+	-fx-text-fill: #ff0000;
+}
+
+.button {
+	-fx-background-color: #7D97B0;
+	-fx-text-fill: #ffd11a;
+}
+
+.button:hover {
+	-fx-background-color: #708AA0;
+}
+
+.button:pressed {
+	-fx-background-color: #7D97B0;
+	-fx-translate-y: 3.0;
+}
+
+.table-view .column-header {
+	-fx-background-color: #7D97B0;
+}
+
+.table-view .filler {
+	-fx-background-color: #7D97B0;
+} 
+
+.table-view .column-header-background .label {
+	-fx-background-color: transparent;
+	-fx-text-fill: #ffd11a;
+}
+
+.label {
+	-fx-text-fill: #000000;
+}
+
+.radio-button {
+	-fx-text-fill: #000000;
+}
