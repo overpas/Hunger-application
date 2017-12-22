@@ -6,12 +6,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="358.0" prefWidth="957.0"
+<AnchorPane prefHeight="358.0" prefWidth="977.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="by.overpass.hungerprovision.Controller">
 	<children>
-		<SplitPane dividerPositions="0.62" layoutX="11.0" layoutY="21.0"
-			prefHeight="358.0" prefWidth="957.0" AnchorPane.bottomAnchor="0.0"
+		<SplitPane dividerPositions="0.6827" layoutX="11.0" layoutY="21.0"
+			prefHeight="358.0" prefWidth="977.0" AnchorPane.bottomAnchor="0.0"
 			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
 			AnchorPane.topAnchor="0.0">
 			<items>
@@ -19,7 +19,7 @@
 					prefWidth="100.0">
 					<children>
 						<TableView fx:id="tblViewIngredients" layoutX="78.0"
-							layoutY="25.0" prefHeight="356.0" prefWidth="555.0"
+							layoutY="25.0" prefHeight="356.0" prefWidth="667.0"
 							AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
 							AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 							<columns>
@@ -27,6 +27,8 @@
 									text="Название" />
 								<TableColumn fx:id="clmnQuantity" prefWidth="75.0"
 									text="Количество" />
+								<TableColumn fx:id="clmnUnits" prefWidth="70.0"
+									text="Единицы" />
 								<TableColumn fx:id="clmnProvider" prefWidth="114.0"
 									text="Поставщик" />
 								<TableColumn fx:id="clmnImportDate" prefWidth="88.0"
@@ -38,10 +40,10 @@
 					</children>
 				</AnchorPane>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0"
-					prefWidth="401.0">
+					prefWidth="310.0">
 					<children>
 						<GridPane layoutX="14.0" layoutY="14.0" prefHeight="262.0"
-							prefWidth="333.0">
+							prefWidth="280.0">
 							<columnConstraints>
 								<ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES"
 									maxWidth="187.0" minWidth="10.0" prefWidth="133.0" />
@@ -116,32 +118,25 @@
 									</padding>
 								</HBox>
 								<TextField fx:id="txtQuantity" prefHeight="25.0"
-									prefWidth="190.0" GridPane.columnIndex="1" 
-									GridPane.rowIndex="2" />
+									prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 								<TextField fx:id="txtProvider" prefHeight="25.0"
-									prefWidth="190.0" GridPane.columnIndex="1" 
-									GridPane.rowIndex="3" />
+									prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 								<DatePicker fx:id="dtpckrImportDate"
-									GridPane.columnIndex="1" prefWidth="190.0" 
-									GridPane.rowIndex="4" />
+									GridPane.columnIndex="1" prefWidth="190.0" GridPane.rowIndex="4" />
 								<DatePicker fx:id="dtpckrExpiryDate"
-									GridPane.columnIndex="1" prefWidth="190.0" 
-									GridPane.rowIndex="5" />
+									GridPane.columnIndex="1" prefWidth="190.0" GridPane.rowIndex="5" />
 							</children>
 						</GridPane>
 						<HBox layoutX="16.0" layoutY="222.0" prefHeight="33.0"
-							prefWidth="315.0" spacing="5.0" alignment="CENTER">
+							prefWidth="280.0" spacing="5.0" alignment="CENTER">
 							<children>
-								<Button fx:id="btnSave" mnemonicParsing="false"
-									onAction="#saveInfo" text="Сохранить" />
+								<Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveInfo"
+									text="Сохранить" />
 								<Button fx:id="btnUpdate" disable="false"
-									mnemonicParsing="false" 
-									onAction="#updateInfo" text="Обновить" />
+									mnemonicParsing="false" onAction="#updateInfo" text="Обновить" />
 								<Button fx:id="btnDelete" disable="false"
-									mnemonicParsing="false" 
-									onAction="#deleteInfo" text="Удалить" />
-								<Button mnemonicParsing="false" 
-									onAction="#createNewRecord"
+									mnemonicParsing="false" onAction="#deleteInfo" text="Удалить" />
+								<Button fx:id="btnNew" mnemonicParsing="false" onAction="#createNewRecord"
 									text="Новый" />
 							</children>
 						</HBox>
