@@ -75,7 +75,7 @@ public class JDBCIngredientDAOImpl implements IngredientDAO {
 	}
 
 	@Override
-	public boolean updateIngredient(Ingredient ingredient) throws SQLException {
+	public boolean updateIngredient(Ingredient ingredient) {
 		try {
 			if (shouldCreateNewProvider(ingredient))
 				if (!createNewProvider(ingredient)) {
@@ -84,16 +84,17 @@ public class JDBCIngredientDAOImpl implements IngredientDAO {
 				}
 
 			PreparedStatement ps = (PreparedStatement) connection.prepareStatement(
-				"UPDATE " + INGREDIENTS_TABLE_NAME + " SET name=?, quantity=?," 
+				"UPDATE " + INGREDIENTS_TABLE_NAME + " SET name=?, unit=?, quantity=?," 
 				+ " provider_id=(SELECT id FROM " + PROVIDERS_TABLE_NAME 
 				+ " WHERE name=? LIMIT 1), import_date=?, expiry_date=? WHERE "
 				+ "id=?");
 			ps.setString(1, ingredient.getName());
-			ps.setDouble(2, ingredient.getQuantity());
-			ps.setString(3, ingredient.getProvider());
-			ps.setDate(4, ingredient.getImportDate());
-			ps.setDate(5, ingredient.getExpiryDate());
-			ps.setInt(6, ingredient.getId());
+			ps.setString(2, ingredient.getUnits());
+			ps.setDouble(3, ingredient.getQuantity());
+			ps.setString(4, ingredient.getProvider());
+			ps.setDate(5, ingredient.getImportDate());
+			ps.setDate(6, ingredient.getExpiryDate());
+			ps.setInt(7, ingredient.getId());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
@@ -113,6 +114,7 @@ public class JDBCIngredientDAOImpl implements IngredientDAO {
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 		

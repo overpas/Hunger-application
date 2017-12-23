@@ -9,7 +9,7 @@ public interface IngredientDAO {
 	//public boolean shouldCreateNewProvider(Ingredient ingredient) throws SQLException;
 	//public boolean createNewProvider(Ingredient ingredient) throws SQLException;
 	public boolean insertIngredient(Ingredient ingredient);
-	public boolean updateIngredient(Ingredient ingredient) throws SQLException;
+	public boolean updateIngredient(Ingredient ingredient);
 	public boolean deleteIngredient(Ingredient ingredient);
 	public List<Ingredient> selectIngredients() throws SQLException;
 }

@@ -48,6 +48,7 @@ public class Controller implements Initializable {
 	@FXML private TableColumn<Ingredient, String> clmnProvider;
 	@FXML private TableColumn<Ingredient, Date> clmnImportDate;
 	@FXML private TableColumn<Ingredient, Date> clmnExpiryDate;
+	private int chosenIngredientId;
 	private InputHelper inputHelper = new InputHelper();
 	private static IngredientDAO dao;
 	private static ObservableList<Ingredient> observables = FXCollections.observableArrayList();
@@ -72,11 +73,43 @@ public class Controller implements Initializable {
 	@FXML
 	public void updateInfo() {
 		System.out.println("UPDATE");
+		if (!inputHelper.isInputValid()) {
+			System.out.println("input is invalid");
+			// TODO
+			return;
+		}
+		
+		dao.updateIngredient(new Ingredient(chosenIngredientId, txtName.getText(),
+				rbtnKilos.isSelected() ? rbtnKilos.getText() : rbtnPieces.getText(),
+				Double.parseDouble(txtQuantity.getText()), txtProvider.getText(),
+				Date.valueOf(dtpckrImportDate.getValue()),
+				Date.valueOf(dtpckrExpiryDate.getValue())));
+		try {
+			fillTable();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
 	public void deleteInfo() {
 		System.out.println("DELETE");
+		dao.deleteIngredient(new Ingredient(chosenIngredientId, txtName.getText(),
+				rbtnKilos.isSelected() ? rbtnKilos.getText() : rbtnPieces.getText(),
+				Double.parseDouble(txtQuantity.getText()), txtProvider.getText(),
+				Date.valueOf(dtpckrImportDate.getValue()),
+				Date.valueOf(dtpckrExpiryDate.getValue())));
+		
+		inputHelper.clearInputFields();
+		btnDelete.setDisable(true);
+		btnUpdate.setDisable(true);
+		try {
+			fillTable();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
@@ -87,6 +120,7 @@ public class Controller implements Initializable {
 			// TODO
 			return;
 		}
+		
 		dao.insertIngredient(new Ingredient(txtName.getText(),
 				rbtnKilos.isSelected() ? rbtnKilos.getText() : rbtnPieces.getText(),
 				Double.parseDouble(txtQuantity.getText()), txtProvider.getText(),
@@ -143,12 +177,16 @@ public class Controller implements Initializable {
 			boolean allocatedAnItem = true;
 			
 			try {
+				chosenIngredientId = ingredient.getId();
 				txtName.setText(ingredient.getName());
 				if (ingredient.getUnits().equals("רע")) 
 					groupUnits.selectToggle(rbtnPieces);
 				else 
 					groupUnits.selectToggle(rbtnKilos);
-				txtQuantity.setText(String.valueOf(ingredient.getQuantity()));
+				if (rbtnPieces.isSelected())
+					txtQuantity.setText(String.valueOf((int) ingredient.getQuantity()));
+				else
+					txtQuantity.setText(String.valueOf(ingredient.getQuantity()));
 				txtProvider.setText(ingredient.getProvider());
 				dtpckrImportDate.setValue(ingredient.getImportDate().toLocalDate());
 				dtpckrExpiryDate.setValue(ingredient.getExpiryDate().toLocalDate());
@@ -166,6 +204,16 @@ public class Controller implements Initializable {
 	}
 	
 	private class InputHelper implements ChangeListener<String>{
+		
+		private void clearInputFields() {
+			txtName.setText("");
+			txtProvider.setText("");
+			txtQuantity.setText("");
+			dtpckrImportDate.getEditor().clear();
+			dtpckrExpiryDate.getEditor().clear();
+			if (rbtnKilos.isSelected()) rbtnKilos.setSelected(false);
+			if (rbtnPieces.isSelected()) rbtnPieces.setSelected(false);
+		}
 		
 		private boolean isInputValid() {
 			if (txtName.getText().isEmpty())
