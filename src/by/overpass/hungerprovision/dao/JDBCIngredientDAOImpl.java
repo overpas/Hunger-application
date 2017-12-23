@@ -1,6 +1,5 @@
 package by.overpass.hungerprovision.dao;
 
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +9,7 @@ import java.util.List;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
+
 import by.overpass.hungerprovision.model.Ingredient;
 
 public class JDBCIngredientDAOImpl implements IngredientDAO {
@@ -42,21 +42,32 @@ public class JDBCIngredientDAOImpl implements IngredientDAO {
 	@Override
 	public boolean insertIngredient(Ingredient ingredient) {
 		try {
-			if (shouldCreateNewProvider(ingredient))
-				if (!createNewProvider(ingredient)) return false;
+			boolean shouldCreateNewProvider = shouldCreateNewProvider(ingredient);
+			System.out.println("shouldCreateNewProvider = " + shouldCreateNewProvider);
+			if (shouldCreateNewProvider) {
+				boolean createdNewProvider = createNewProvider(ingredient);
+				System.out.println("createdNewProvider = " + createdNewProvider);
+				if (!createdNewProvider) {
+					System.out.println("!createdNewProvider");
+					return false;
+				}
+			}
 			
+			System.out.println("ingredient, being inserted: " + ingredient);
 			PreparedStatement ps = (PreparedStatement) connection.prepareStatement("INSERT INTO "
-				+ INGREDIENTS_TABLE_NAME + "(name, quantity, provider_id, import_date," 
-				+ " expiry_date) VALUES (?, ?, (SELECT id FROM " + PROVIDERS_TABLE_NAME 
+				+ INGREDIENTS_TABLE_NAME + "(name, unit, quantity, provider_id, import_date," 
+				+ " expiry_date) VALUES (?, ?, ?, (SELECT id FROM " + PROVIDERS_TABLE_NAME 
 				+ " WHERE name=?" + " LIMIT 1), ?, ?)");
 			ps.setString(1, ingredient.getName());
-			ps.setDouble(2, ingredient.getQuantity());
-			ps.setString(3, ingredient.getProvider());
-			ps.setDate(4, ingredient.getImportDate());
-			ps.setDate(5, ingredient.getExpiryDate());
+			ps.setString(2, ingredient.getUnits());
+			ps.setDouble(3, ingredient.getQuantity());
+			ps.setString(4, ingredient.getProvider());
+			ps.setDate(5, ingredient.getImportDate());
+			ps.setDate(6, ingredient.getExpiryDate());
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 		
@@ -67,7 +78,10 @@ public class JDBCIngredientDAOImpl implements IngredientDAO {
 	public boolean updateIngredient(Ingredient ingredient) throws SQLException {
 		try {
 			if (shouldCreateNewProvider(ingredient))
-				if (!createNewProvider(ingredient)) return false;
+				if (!createNewProvider(ingredient)) {
+					System.out.println("Couldn't create a new provider.");
+					return false;
+				}
 
 			PreparedStatement ps = (PreparedStatement) connection.prepareStatement(
 				"UPDATE " + INGREDIENTS_TABLE_NAME + " SET name=?, quantity=?," 
@@ -83,6 +97,7 @@ public class JDBCIngredientDAOImpl implements IngredientDAO {
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 		
@@ -150,26 +165,35 @@ public class JDBCIngredientDAOImpl implements IngredientDAO {
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 		} catch (SQLException e) {
+			System.out.println("Couldn't create a new provider.");
 			return false;
 		}
+		System.out.println("Created a new provider.");
 
 		return true;
 	}
 
 	private boolean shouldCreateNewProvider(Ingredient ingredient) throws SQLException {
 		Statement statement = (Statement) connection.createStatement();
-		ResultSet resultSet = statement.executeQuery("SELECT * FROM " 
-			+ PROVIDERS_TABLE_NAME + " WHERE name=? LIMIT 1");
-
-		if (resultSet != null)
-			if (resultSet.getString("id") != null)
-				if (resultSet.getString("id").trim().equals("")) {
+		ResultSet resultSet = statement.executeQuery("SELECT * FROM " + PROVIDERS_TABLE_NAME 
+			+ " WHERE name='" + ingredient.getProvider() + "' LIMIT 1");
+		
+		//if (resultSet.next()) System.out.println("resultSet isn't empty");
+		if (resultSet.next()) {
+			System.out.println("resultSet = " + resultSet.toString());
+			if (resultSet.getInt("id") != 0) {
+				System.out.println("resultSet.getString(\"id\") = " + resultSet.getInt("id"));
+				if (!resultSet.getString("id").trim().equals("")) {
 					resultSet.close();
 					statement.close();
-					return true;
+					return false;
 				}
+			} else {
+				System.out.println("getString(1) = null!");
+			}
+		}
 
-		return false;
+		return true;
 	}
 
 }

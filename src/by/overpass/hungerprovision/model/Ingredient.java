@@ -21,6 +21,16 @@ public class Ingredient {
 		this.importDate = importDate;
 		this.expiryDate = expiryDate;
 	}
+	
+	public Ingredient(String name, String units, double quantity, String provider,
+			Date importDate, Date expiryDate) {
+		this.name = name;
+		this.units = units;
+		this.quantity = quantity;
+		this.provider = provider;
+		this.importDate = importDate;
+		this.expiryDate = expiryDate;
+	}
 
 	public int getId() {
 		return id;
@@ -80,7 +90,7 @@ public class Ingredient {
 
 	@Override
 	public String toString() {
-		return "(" + id + ", " + name + ")";
+		return "(" + id + ", " + name + ", " + provider + ", " + quantity + ")";
 	}
 	
 }
