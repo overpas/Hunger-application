@@ -6,8 +6,8 @@ import java.util.List;
 import by.overpass.hungerprovision.model.Ingredient;
 
 public interface IngredientDAO {
-	//public boolean shouldCreateNewProvider(Ingredient ingredient) throws SQLException;
-	//public boolean createNewProvider(Ingredient ingredient) throws SQLException;
+	public boolean connect() throws SQLException, ClassNotFoundException;
+	public boolean disconnect() throws SQLException;
 	public boolean insertIngredient(Ingredient ingredient);
 	public boolean updateIngredient(Ingredient ingredient);
 	public boolean deleteIngredient(Ingredient ingredient);

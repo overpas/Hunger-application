@@ -1,5 +1,6 @@
-package by.overpass.hungerprovision;
+package by.overpass.hungerprovision.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+import by.overpass.hungerprovision.ConfirmationState;
 import by.overpass.hungerprovision.dao.IngredientDAO;
 import by.overpass.hungerprovision.dao.JDBCIngredientDAOImpl;
 import by.overpass.hungerprovision.model.Ingredient;
@@ -14,8 +16,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
@@ -26,8 +34,10 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class Controller implements Initializable {
+public class MainController implements Initializable {
 	
 	@FXML private TextField txtName;
 	@FXML private RadioButton rbtnKilos;
@@ -50,19 +60,71 @@ public class Controller implements Initializable {
 	@FXML private TableColumn<Ingredient, Date> clmnExpiryDate;
 	private int chosenIngredientId;
 	private InputHelper inputHelper = new InputHelper();
-	private static IngredientDAO dao;
-	private static ObservableList<Ingredient> observables = FXCollections.observableArrayList();
+	private IngredientDAO dao = null;
+	private ObservableList<Ingredient> observables = FXCollections.observableArrayList();
+	public Stage stage;
 	
-	static {
+	private boolean openConnection() {
 		try {
 			dao = new JDBCIngredientDAOImpl();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (ClassNotFoundException | SQLException e1) {
+			Alert databaseConnectionAlert = new Alert(AlertType.ERROR);
+			databaseConnectionAlert.setTitle("Ошибка подключения");
+			databaseConnectionAlert.setContentText("Повторите попытку позже");
+			databaseConnectionAlert.setHeaderText("Не удалось подключиться к базе данных");
+			databaseConnectionAlert.showAndWait();
+			e1.printStackTrace();
+		}
+		
+		return dao != null;
+	}
+	
+	private boolean closeConnection() {
+		boolean connectionClosed = false;
+		try {
+			connectionClosed = dao.disconnect();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			Alert databaseConnectionAlert = new Alert(AlertType.ERROR);
+			databaseConnectionAlert.setTitle("Ошибка подключения");
+			databaseConnectionAlert.setContentText("Повторите попытку позже");
+			databaseConnectionAlert.setHeaderText("Не удалось подключиться к базе данных");
+			databaseConnectionAlert.showAndWait();
 			e.printStackTrace();
 		}
+		
+		return connectionClosed;
+	}
+	
+	private void completeTable() {
+		try {
+			fillTable();
+		} catch (SQLException e) {
+			Alert databaseConnectionAlert = new Alert(AlertType.ERROR);
+			databaseConnectionAlert.setTitle("Ошибка подключения");
+			databaseConnectionAlert.setContentText("Повторите попытку позже");
+			databaseConnectionAlert.setHeaderText("Не удалось подключиться к базе данных");
+			databaseConnectionAlert.showAndWait();
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean offerChoice(ActionEvent event) {
+		final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(stage);
+        Parent home_page_parent;
+		try {
+			home_page_parent = FXMLLoader.load(getClass().getResource("../confirmation_window.fxml"));
+			Scene home_page_scene = new Scene(home_page_parent);
+	        dialog.setScene(home_page_scene);
+	        
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		dialog.show();
+        
+		return true;
 	}
 	
 	@FXML
@@ -71,11 +133,14 @@ public class Controller implements Initializable {
 	}
 	
 	@FXML
-	public void updateInfo() {
+	public void updateInfo(ActionEvent event) {
+		//offerChoice(event);
+		openConnection();
+		
 		System.out.println("UPDATE");
 		if (!inputHelper.isInputValid()) {
 			System.out.println("input is invalid");
-			// TODO
+			inputHelper.showInvalidInputAlert();
 			return;
 		}
 		
@@ -84,16 +149,20 @@ public class Controller implements Initializable {
 				Double.parseDouble(txtQuantity.getText()), txtProvider.getText(),
 				Date.valueOf(dtpckrImportDate.getValue()),
 				Date.valueOf(dtpckrExpiryDate.getValue())));
-		try {
-			fillTable();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		completeTable();
+		closeConnection();
+	}
+	
+	private void updateRecord() {
+		
 	}
 	
 	@FXML
-	public void deleteInfo() {
+	public void deleteInfo(ActionEvent event) {
+		//if (!offerChoice(event)) return;
+		openConnection();
+		
 		System.out.println("DELETE");
 		dao.deleteIngredient(new Ingredient(chosenIngredientId, txtName.getText(),
 				rbtnKilos.isSelected() ? rbtnKilos.getText() : rbtnPieces.getText(),
@@ -104,20 +173,20 @@ public class Controller implements Initializable {
 		inputHelper.clearInputFields();
 		btnDelete.setDisable(true);
 		btnUpdate.setDisable(true);
-		try {
-			fillTable();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		completeTable();
+		closeConnection();
 	}
 	
 	@FXML
-	public void createNewRecord() {
+	public void createNewRecord(ActionEvent event) {
+		//if (!offerChoice(event)) return;
+		openConnection();
+		
 		System.out.println("CREATE");
 		if (!inputHelper.isInputValid()) {
 			System.out.println("input is invalid");
-			// TODO
+			inputHelper.showInvalidInputAlert();
 			return;
 		}
 		
@@ -127,17 +196,18 @@ public class Controller implements Initializable {
 				Date.valueOf(dtpckrImportDate.getValue()),
 				Date.valueOf(dtpckrExpiryDate.getValue())));
 		System.out.println("dao insertion has been conducted");
-		try {
-			fillTable();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		completeTable();
+		closeConnection();
 	}
 
 	public void fillTable() throws SQLException {
+		openConnection();
+		
 		observables = FXCollections.observableArrayList(dao.selectIngredients());
 		tblViewIngredients.setItems(observables);
+		
+		closeConnection();
  	}
 
 	@Override
@@ -261,6 +331,14 @@ public class Controller implements Initializable {
 		
 		private void clearQuantityInput() {
 			txtQuantity.setText("");
+		}
+		
+		private void showInvalidInputAlert() {
+			Alert invalidInputAlert = new Alert(AlertType.ERROR);
+			invalidInputAlert.setTitle("Ошибка ввода");
+			invalidInputAlert.setContentText("Пожалуйста, введите данные");
+			invalidInputAlert.setHeaderText("Недостаточно данных");
+			invalidInputAlert.showAndWait();
 		}
 
 		public void changed(ObservableValue<? extends String> observableValue,

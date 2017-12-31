@@ -26,17 +26,24 @@ public class JDBCIngredientDAOImpl implements IngredientDAO {
 		connect();
 	}
 
-	public void connect() throws ClassNotFoundException, SQLException {
+	public boolean connect() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
 		if (connection == null)
 			connection = (Connection) DriverManager.getConnection("jdbc:mysql://"
 				+ DATABASE_LOCATION + DATABASE_NAME + "?user=" + USER_NAME 
 				+ "&password=" + USER_PASSWORD);
+		
+		if (connection != null) return true;
+		return false;
 	}
 
-	public void disconnect() throws SQLException {
+	public boolean disconnect() throws SQLException {
 		if (connection != null)
 			connection.close();
+		connection = null;
+		
+		if (connection == null) return true;
+		return false;
 	}
 
 	@Override

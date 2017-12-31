@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200.0" minWidth="300.0" 
+	prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1" 
+	fx:controller="by.overpass.hungerprovision.controllers.PopupDialogController">
+   <children>
+      <Pane prefHeight="166.0" prefWidth="300.0">
+         <children>
+            <Label layoutX="57.0" layoutY="53.0" text="Подтвердите действие">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+         </children>
+      </Pane>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+         <children>
+            <Button id="btnOk" minWidth="100.0" mnemonicParsing="false" text="OK" 
+            	onAction="#confirmChange">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button id="btnUndo" minWidth="100.0" mnemonicParsing="false" text="Отменить"
+            	onAction="#stopChange">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</VBox>
