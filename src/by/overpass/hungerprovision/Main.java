@@ -26,7 +26,7 @@ public class Main extends Application {
 		Parent root = fxmlLoader.load(getClass().getResource("ui.fxml").openStream());   
         
 		Scene scene = new Scene(root);
-		scene.getStylesheets().add("style.css");
+		scene.getStylesheets().add("main_window.css");
 		
 		stage.setScene(scene);
 		stage.getIcons().add(new Image("file:resources/images/hunger.png"));

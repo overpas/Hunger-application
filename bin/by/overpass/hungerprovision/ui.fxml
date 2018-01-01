@@ -128,10 +128,8 @@
 							</children>
 						</GridPane>
 						<HBox layoutX="16.0" layoutY="222.0" prefHeight="33.0"
-							prefWidth="280.0" spacing="5.0" alignment="CENTER">
+							prefWidth="280.0" spacing="10.0" alignment="CENTER">
 							<children>
-								<Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveInfo"
-									text="Сохранить" />
 								<Button fx:id="btnUpdate" disable="false"
 									mnemonicParsing="false" onAction="#updateInfo" text="Обновить" />
 								<Button fx:id="btnDelete" disable="false"

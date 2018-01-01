@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-import by.overpass.hungerprovision.ConfirmationState;
+import by.overpass.hungerprovision.InfoOperations;
 import by.overpass.hungerprovision.dao.IngredientDAO;
 import by.overpass.hungerprovision.dao.JDBCIngredientDAOImpl;
 import by.overpass.hungerprovision.model.Ingredient;
@@ -34,6 +34,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -47,7 +48,6 @@ public class MainController implements Initializable {
 	@FXML private TextField txtProvider;
 	@FXML private DatePicker dtpckrImportDate;
 	@FXML private DatePicker dtpckrExpiryDate;
-	@FXML private Button btnSave;
 	@FXML private Button btnDelete;
 	@FXML private Button btnUpdate;
 	@FXML private Button btnNew;
@@ -108,16 +108,26 @@ public class MainController implements Initializable {
 		}
 	}
 	
-	private boolean offerChoice(ActionEvent event) {
-		final Stage dialog = new Stage();
+	private boolean offerChoice(ActionEvent event, InfoOperations operation) {
+		Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(stage);
-        Parent home_page_parent;
+        Parent parent;
 		try {
-			home_page_parent = FXMLLoader.load(getClass().getResource("../confirmation_window.fxml"));
-			Scene home_page_scene = new Scene(home_page_parent);
-	        dialog.setScene(home_page_scene);
-	        
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			parent = fxmlLoader.load(getClass().getResource("../confirmation_window.fxml").openStream());
+			Scene dialogScene = new Scene(parent);
+			dialogScene.getStylesheets().add("main_window.css");
+	        dialog.setScene(dialogScene);
+	        dialog.getIcons().add(new Image("file:resources/images/hunger.png"));
+			PopupDialogController dialogController = fxmlLoader.getController();
+			dialogController.dialogStage = dialog;
+			System.out.println("DIALOG STAGE IN MAIN CONTROLLER: " + dialog);
+			System.out.println("DIALOG STAGE IN DIALOG CONTROLLER: " + dialogController.dialogStage);
+			dialogController.mainController = this;
+			System.out.println("MAIN CONTROLLER IN MAIN CONTROLLER: " + this);
+			System.out.println("MAIN CONTROLLER IN DIALOG CONTROLLER: " + dialogController.mainController);
+			dialogController.currentOperation = operation;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
@@ -134,7 +144,10 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void updateInfo(ActionEvent event) {
-		//offerChoice(event);
+		offerChoice(event, InfoOperations.UPDATE);
+	}
+	
+	public void updateRecord() {
 		openConnection();
 		
 		System.out.println("UPDATE");
@@ -154,13 +167,12 @@ public class MainController implements Initializable {
 		closeConnection();
 	}
 	
-	private void updateRecord() {
-		
-	}
-	
 	@FXML
 	public void deleteInfo(ActionEvent event) {
-		//if (!offerChoice(event)) return;
+		offerChoice(event, InfoOperations.DELETE);
+	}
+	
+	public void deleteRecord() {
 		openConnection();
 		
 		System.out.println("DELETE");
@@ -180,7 +192,10 @@ public class MainController implements Initializable {
 	
 	@FXML
 	public void createNewRecord(ActionEvent event) {
-		//if (!offerChoice(event)) return;
+		offerChoice(event, InfoOperations.CREATE);
+	}
+	
+	public void createRecord() {
 		openConnection();
 		
 		System.out.println("CREATE");
@@ -226,7 +241,6 @@ public class MainController implements Initializable {
 				new PropertyValueFactory<Ingredient, Date>("expiryDate"));
 		
 		btnUpdate.setDisable(true);
-		btnSave.setDisable(true);
 		btnDelete.setDisable(true);
 		
 		inputHelper.restrictQuantityInput();
@@ -267,7 +281,6 @@ public class MainController implements Initializable {
 			if (allocatedAnItem) {
 				btnNew.setDisable(false);
 				btnDelete.setDisable(false);
-				btnSave.setDisable(true);
 				btnUpdate.setDisable(false);
 			}
 		});
