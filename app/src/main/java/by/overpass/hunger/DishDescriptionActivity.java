@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import by.overpass.hunger.datamanipulation.CartController;
+import by.overpass.hunger.datamanipulation.TransitionHelper;
+
 public class DishDescriptionActivity extends AppCompatActivity {
 
     private TextView dishDescriptionTextView;

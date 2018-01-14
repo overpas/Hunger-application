@@ -1,4 +1,4 @@
-package by.overpass.hunger;
+package by.overpass.hunger.datamodel;
 
 /**
  * Created by MSI GE62 2QE Apache on 24.10.2017.

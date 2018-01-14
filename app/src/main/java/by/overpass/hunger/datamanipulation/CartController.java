@@ -1,10 +1,8 @@
-package by.overpass.hunger;
+package by.overpass.hunger.datamanipulation;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import by.overpass.hunger.CartActivity;
+import by.overpass.hunger.R;
+import by.overpass.hunger.datamodel.Dish;
 
 /**
  * Created by MSI GE62 2QE Apache on 29.10.2017.

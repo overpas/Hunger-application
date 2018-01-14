@@ -1,19 +1,18 @@
 package by.overpass.hunger;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.List;
+import by.overpass.hunger.adapters.DishPreviewAdapter;
+import by.overpass.hunger.datamanipulation.CartController;
+import by.overpass.hunger.datamanipulation.TransitionHelper;
 
 public class DishesMenuActivity extends AppCompatActivity {
 

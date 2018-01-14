@@ -19,6 +19,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import by.overpass.hunger.datamanipulation.CartController;
+import by.overpass.hunger.datamanipulation.TransitionHelper;
+
 public class LoadingDishDescriptionActivity extends AppCompatActivity {
 
     private int chosenDishID = -1;

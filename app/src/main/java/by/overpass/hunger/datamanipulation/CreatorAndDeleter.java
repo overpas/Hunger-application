@@ -1,4 +1,4 @@
-package by.overpass.hunger;
+package by.overpass.hunger.datamanipulation;
 
 import android.os.AsyncTask;
 
@@ -12,10 +12,11 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 /**
- * Created by MSI GE62 2QE Apache on 15.11.2017.
+ * Created by MSI GE62 2QE Apache on 02.11.2017.
  */
 
-public class OrderCompleter extends AsyncTask<String, Void, String> {
+public class CreatorAndDeleter extends AsyncTask<String, Void, String> {
+
     @Override
     protected String doInBackground(String... urls) {
         String link = urls[0];
@@ -28,17 +29,25 @@ public class OrderCompleter extends AsyncTask<String, Void, String> {
             conn.setDoOutput(true);
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 
-            String orderID = urls[1], customerID = urls[2], destination = urls[3];
+            if (urls.length == 3) {
+                String dishID = urls[1], orderID = urls[2];
 
-            String data = URLEncoder.encode("orderID", "UTF-8") + "=" +
-                    URLEncoder.encode(orderID, "UTF-8");
-            data += "&" + URLEncoder.encode("customerID", "UTF-8") + "=" +
-                    URLEncoder.encode(customerID, "UTF-8");
-            data += "&" + URLEncoder.encode("destination", "UTF-8") + "=" +
-                    URLEncoder.encode(destination, "UTF-8");
+                String data = URLEncoder.encode("dishID", "UTF-8") + "=" +
+                        URLEncoder.encode(dishID, "UTF-8");
+                data += "&" + URLEncoder.encode("orderID", "UTF-8") + "=" +
+                        URLEncoder.encode(orderID, "UTF-8");
 
-            wr.write(data);
-            wr.flush();
+                wr.write(data);
+                wr.flush();
+            } else if (urls.length == 2) {
+                String orderID = urls[1];
+
+                String data = URLEncoder.encode("orderID", "UTF-8") + "=" +
+                        URLEncoder.encode(orderID, "UTF-8");
+
+                wr.write(data);
+                wr.flush();
+            }
 
             BufferedReader reader = new BufferedReader(new
                     InputStreamReader(conn.getInputStream()));

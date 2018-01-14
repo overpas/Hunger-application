@@ -1,4 +1,4 @@
-package by.overpass.hunger;
+package by.overpass.hunger.datamanipulation;
 
 import android.os.AsyncTask;
 import android.util.Log;

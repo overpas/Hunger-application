@@ -1,4 +1,4 @@
-package by.overpass.hunger;
+package by.overpass.hunger.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import by.overpass.hunger.R;
+import by.overpass.hunger.datamodel.Dish;
 
 /**
  * Created by MSI GE62 2QE Apache on 24.10.2017.

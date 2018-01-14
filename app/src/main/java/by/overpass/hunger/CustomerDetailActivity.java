@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import by.overpass.hunger.datamanipulation.CartController;
+
 public class CustomerDetailActivity extends AppCompatActivity {
 
     private final String customerNamePrefKey = "userPreferredName";

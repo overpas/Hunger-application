@@ -13,6 +13,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import by.overpass.hunger.adapters.DishInCartAdapter;
+import by.overpass.hunger.datamanipulation.CartController;
+
 public class CartActivity extends AppCompatActivity {
 
     private ListView listView;

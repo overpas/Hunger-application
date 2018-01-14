@@ -10,6 +10,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import by.overpass.hunger.adapters.DishCategoryAdapter;
+import by.overpass.hunger.datamanipulation.CartController;
+import by.overpass.hunger.datamodel.DishCategory;
+
 public class StartMenuActivity extends AppCompatActivity {
 
     private GridView gridView;

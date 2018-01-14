@@ -1,4 +1,4 @@
-package by.overpass.hunger;
+package by.overpass.hunger.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,11 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import by.overpass.hunger.CartActivity;
+import by.overpass.hunger.R;
+import by.overpass.hunger.datamanipulation.CartController;
+import by.overpass.hunger.datamodel.Dish;
 
 /**
  * Created by MSI GE62 2QE Apache on 27.10.2017.
